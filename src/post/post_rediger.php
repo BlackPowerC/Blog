@@ -12,33 +12,59 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
     {
         /* PDO OBJCET */
         $pdo = Database::getInstance()->getPDO();
-        
+
         switch (strip_tags($_POST['operation']))
         {
             case 'modify':
-                $id = trim($_POST['id']);
+                $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
-                $tags = explode(strtolower(strip_tags($_POST['tags'])), ",");
                 $titre = strip_tags($_POST['titre']);
-                /* Update des tags */
-                $insert_tags = $pdo->prepare("INSERT INTO tag values (:id_article, :tags)");
-                foreach ($tags as $value)
+                $tags = explode(",", strip_tags($_POST['tags']));
+                /* Modification de l'article */
+                $update_article = $pdo->prepare("UPDATE article set text=:text, titre=:titre WHERE id=:id_article");
+                $update_article->bindValue(":text", $text, PDO::PARAM_STR);
+                $update_article->bindValue(":id_article", $id, PDO::PARAM_INT);
+                $update_article->bindValue(":titre", $titre, PDO::PARAM_STR);
+                $update_article->execute();
+                $update_article->closeCursor();
+                /* Modification des tags */
+                $delete_tags = $pdo->prepare("DELETE FROM tag WHERE id_article=:id_article");
+                $delete_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
+                $delete_tags->execute();
+                $delete_tags->closeCursor();
+                $insert_tags = $pdo->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
+                $insert_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
+                foreach ($tags as $tag)
                 {
-                    $insert_tags->bindParam(':tags', $value, PDO::PARAM_STR) ;
-                    $insert_tags->bindParam(':id_article', $value, PDO::PARAM_INT) ;
-                    $insert_tags->execute() ;
+                    $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
+                    $insert_tags->execute();
                 }
-                $insert_tags->closeCursor() ;
-                /* Update opération */
-                $insert = $pdo->prepare("UPDATE article SET titre=:titre, text =:text WHERE id=:id");
-                $insert->execute(array("titre" => $titre, "id" => $id, "text" => $text, "tags" => $tags));
+                $insert_tags->closeCursor();
                 break;
             case 'insert':
+                /* Insertion de l'article */
+                $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
-                $tags = strtolower(strip_tags($_POST['tags']));
                 $titre = strip_tags($_POST['titre']);
-                $insert = $pdo->prepare("INSERT INTO article VALUES (NULL, :id_user, :titre, :date, :tags, :text)");
-                $insert->execute(array('id_user' => $_SESSION['id'], "titre" => $titre, "date" => date("d F Y"), "text" => $text, "tags" => $tags));
+                $date = date("d F Y");
+                $tags = explode(",", strip_tags(trim($_POST['tags'])));
+                $insert_article = $pdo->prepare("INSERT INTO article VALUES (:id, :id_user, :titre, :date, :text)");
+                $insert_article->bindValue(":id", $id, PDO::PARAM_INT);
+                $insert_article->bindValue(":id_user", $_SESSION['id'], PDO::PARAM_INT);
+                $insert_article->bindValue(":titre", $titre, PDO::PARAM_STR);
+                $insert_article->bindValue(":date", $date, PDO::PARAM_STR);
+                $insert_article->bindValue(":text", $text, PDO::PARAM_STR);
+                $insert_article->closeCursor();
+                /* Insertion des tags */
+                $insert_tags = $pdo->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
+                $insert_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
+                foreach ($tags as $tag)
+                {
+                    $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
+                    $insert_tags->execute();
+                }
+                var_dump($_POST) ;
+                $insert_tags->closeCursor();
                 break;
             case 'delete' :
                 $id = trim($_POST['id']);

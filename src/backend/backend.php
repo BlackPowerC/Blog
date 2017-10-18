@@ -22,7 +22,7 @@ class backendController
     {
         $sql_query = "SELECT a.id, a.date, a.titre, a.text, a.id_user
                         FROM article a 
-                        LEFT JOIN user u ON u.id = a.id_user 
+                        LEFT JOIN user u ON u.id = a.id_user
                         WHERE u.id=:id_user" ;
         
         $requete = Database::getInstance()->getPDO()->prepare($sql_query);
@@ -30,6 +30,7 @@ class backendController
         $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
         include_once '../views/backend/backend_redigerView.php';
         var_dump($articles) ;
+        echo count($articles);
     }
 
 }
