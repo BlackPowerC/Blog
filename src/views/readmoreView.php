@@ -22,19 +22,40 @@
                         <!-- end article_header_content -->
                         <div class="article_text_content">
                             <?php
-                            echo html_entity_decode($HTMLView['text']) ;
+                            echo html_entity_decode($HTMLView['text']);
                             ?>
                             <div class="container container-fluid">
                                 Etiquettes:  
-                                <?php foreach ($response_tags as $tag) 
-                                {
-                                    $tg = new Tag($tag) ;
-                                    ?>
-                                <a href="index.php?tag=<?php echo $tg->getTag() ; ?>" class="well well-sm"><?php echo $tg->getTag() ; ?></a>
                                 <?php
+                                foreach ($response_tags as $tag)
+                                {
+                                    $tg = new Tag($tag);
+                                    ?>
+                                    <a href="index.php?tag=<?php echo $tg->getTag(); ?>" class="well well-sm"><?php echo $tg->getTag(); ?></a>
+                                    <?php
                                 }
                                 ?>
                             </div>
+                        </div>
+
+                        <div class="media-sharing">
+                            <h4>Partager sur les réseaux sociaux</h4>
+                            <?php
+                            $social = new MediaSharing('http://' . $_SERVER['SERVER_ADDR'] . $_SERVER['REQUEST_URI']);
+                            $_ = $social->getSharedButton();
+                            ?>
+                            <span class="facebook">
+                                <?php
+                                $fb = $_['facebook'];
+                                echo $fb;
+                                ?>
+                            </span>
+                            <span class="twitter">
+                                <?php
+                                $tw = $_['twitter'];
+                                echo $tw;
+                                ?>
+                            </span>
                         </div>
                         <!-- end article_text_content -->
                         <div class="article_comment_content">
@@ -103,7 +124,7 @@
                             ?>
                             <div class="article_comment_zone">
                                 <!-- Script tinymce pour l'éditeur WYSIWYG -->
-    <?php Page::getTinymce(); ?>
+                                <?php Page::getTinymce(); ?>
                                 <h4>Ecrire un commentaire</h4>
                                 <form method="POST" action="../post/post_comment.php">
                                     <textarea name="comment" rows="" cols=""><?php if (isset($_POST['text_comment'])) echo strip_tags($_POST['text_comment']); ?></textarea>

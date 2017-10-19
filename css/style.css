@@ -8,56 +8,61 @@ and open the template in the editor.
     Author     : jordy
 */
 
+.media-sharing
+{
+    margin-top: 40px; 
+    padding: 2px;
+}
+
 /* Contenu page */
 .main_content
 {
- width: 65%;
- margin: auto;
- margin-top: 50px;
+    width: 65%;
+    margin: auto;
+    margin-top: 50px;
 }
 
 /* Contenu cmmentaire */
 .article_comment_content
 {
-  margin-top: 40px;
-  margin-bottom: 15px;
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 .article_comment_content .container-fluid
 {
-  border-bottom: 1px grey solid ;
-  margin-bottom: 10px; 
+    border-bottom: 1px grey solid ;
+    margin-bottom: 10px; 
 }
 
 .article_comment_content .comment_header
 {
-  background-color: #3494b7;
-  color: white;
-  padding: 3px;
+    background-color: #3494b7;
+    color: white;
+    padding: 3px;
 }
 
 .article_comment_content .comment_header .date_comment, .editlink_content
 {
-  float: right;
+    float: right;
 }
 
 /* Edit form*/
 .editlink_content form
 {
-  display: inline;
+    display: inline;
 }
 
 .btn, .editlink_content form .btn, .editlink_content a
 {
-    width: 100px;
     margin-bottom: 2%;
     border-radius: 0px;
 }
 
 .editlink_content button
 {
-  border: none;
-  background: transparent;
+    border: none;
+    background: transparent;
 }
 
 .editlink_content .glyphicon-off, .glyphicon-edit
@@ -69,47 +74,47 @@ and open the template in the editor.
 /* Contenu article */
 .article_content
 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .card
 {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding-left: 5px ;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  
-  background-color: #F8F8FF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding-left: 5px ;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    background-color: #F8F8FF;
 }
 
 /* Contenu navbar */
 .navbar
 {
-  border-radius: 0px ; 
+    border-radius: 0px ; 
 }
 
 /* contenu formulaire */
 .login_content
 {
-  margin: auto;
-  margin-top: 70px;
-  width: 100%;
+    margin: auto;
+    margin-top: 70px;
+    width: 100%;
 }
 
 .login_content label
 {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 .submit_content .btn-primary, .login_form label
 {
-  margin-left: 15px;
+    margin-left: 15px;
 }
 
 .submit_content input
 {
-  padding-left: 10px;
+    padding-left: 10px;
 }
 
 .history_content_item
