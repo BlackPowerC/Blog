@@ -42,7 +42,7 @@
                             <!-- end article_content -->
                             <?php
                         }
-                        $pages->getPagination($_SERVER['REQUEST_URI'] . '&page=');
+                        $pages->getPagination($_SERVER['SCRIPT_NAME'] . '?page=');
                     } else
                     {
                         ?>
@@ -58,3 +58,6 @@
         </div>
     </body>
 </html>
+<?php
+    var_dump($_SERVER) ;
+ ?>
