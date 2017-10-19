@@ -49,11 +49,12 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
                 $date = date("d F Y");
                 $tags = explode(",", strip_tags(trim($_POST['tags'])));
                 $insert_article = $pdo->prepare("INSERT INTO article VALUES (:id, :id_user, :titre, :date, :text)");
-                $insert_article->bindValue(":id", $id, PDO::PARAM_INT);
-                $insert_article->bindValue(":id_user", $_SESSION['id'], PDO::PARAM_INT);
+                $insert_article->bindValue(":id", $id + 1, PDO::PARAM_INT);
+                $insert_article->bindValue(":id_user", (int) $_SESSION['id'], PDO::PARAM_INT);
                 $insert_article->bindValue(":titre", $titre, PDO::PARAM_STR);
                 $insert_article->bindValue(":date", $date, PDO::PARAM_STR);
                 $insert_article->bindValue(":text", $text, PDO::PARAM_STR);
+                $insert_article->execute();
                 $insert_article->closeCursor();
                 /* Insertion des tags */
                 $insert_tags = $pdo->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
@@ -61,9 +62,10 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
                 foreach ($tags as $tag)
                 {
                     $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
-                    $insert_tags->execute();
+                    $insert_tags->execute() ;
                 }
-                var_dump($_POST) ;
+                var_dump($_POST);
+                var_dump($insert_article);
                 $insert_tags->closeCursor();
                 break;
             case 'delete' :
