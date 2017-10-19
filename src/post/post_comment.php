@@ -48,4 +48,4 @@ if (isset($_SESSION["token"]))
     }
 }
 header('Location: http://' . $_SERVER['SERVER_NAME'] . strip_tags($_POST["uri"]));
-exit() ;
+exit();

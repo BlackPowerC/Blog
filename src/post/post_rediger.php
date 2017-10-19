@@ -58,14 +58,12 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
                 $insert_article->closeCursor();
                 /* Insertion des tags */
                 $insert_tags = $pdo->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
-                $insert_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
+                $insert_tags->bindValue(":id_article", $id+1, PDO::PARAM_INT);
                 foreach ($tags as $tag)
                 {
                     $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
                     $insert_tags->execute() ;
                 }
-                var_dump($_POST);
-                var_dump($insert_article);
                 $insert_tags->closeCursor();
                 break;
             case 'delete' :
