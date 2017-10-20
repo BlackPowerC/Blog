@@ -34,7 +34,7 @@ class indexController
         $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                             FROM article a 
                             LEFT JOIN comment c ON a.id = c.id_article 
-                            WHERE a.titre LIKE '%php%' OR a.text LIKE '%php%' 
+                            WHERE a.titre LIKE '%$keyword%' OR a.text LIKE '%$keyword%' 
                             GROUP by a.id" ;
         $data = $pages->initContent($page, $sqlStatement);
         include_once '../views/indexView.php';

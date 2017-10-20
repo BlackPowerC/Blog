@@ -25,7 +25,6 @@ class Pagination
         if ($currentPage >= 1 AND $currentPage <= $this->nPage)
         {
             $requete = Database::getInstance()->getInstance()->getPDO()->query($sqlStatement . ' LIMIT ' . ($currentPage - 1) * $this->perPage . ', ' . $this->perPage);
-            echo ($requete->queryString) ;
             $this->contentArray = $requete->fetchAll(PDO::FETCH_ASSOC);
             $requete->closeCursor();
             return $this->contentArray;
@@ -55,5 +54,9 @@ class Pagination
         $this->perPage = $perPage;
         $this->initPager($table, $column, $where);
     }
-
+    
+    public function getNItem(): int
+    {
+        return $this->nItem ;
+    }
 }
