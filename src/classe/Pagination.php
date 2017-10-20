@@ -10,12 +10,13 @@ class Pagination
     private $contentArray;
     private $currentPage ;
 
-    private function initPager($table, $column)
+    private function initPager(string $table, string $column, string $where="")
     {
-        $requete = Database::getInstance()->getInstance()->getPDO()->query('select COUNT(' . $column . ') AS nItem FROM ' . $table);
-        $reponse = $requete->fetch();
+        $requete = Database::getInstance()->getInstance()->getPDO()->query('select COUNT(' . $column . ') AS nItem FROM ' . $table.' '.$where);
+        $reponse = $requete->fetch(PDO::FETCH_ASSOC);
         $this->nItem = (integer) $reponse['nItem'];
         $this->nPage = (integer) ceil($this->nItem / $this->perPage);
+        $requete->closeCursor() ;
     }
 
     public function initContent($currentPage, $sqlStatement)
@@ -24,7 +25,8 @@ class Pagination
         if ($currentPage >= 1 AND $currentPage <= $this->nPage)
         {
             $requete = Database::getInstance()->getInstance()->getPDO()->query($sqlStatement . ' LIMIT ' . ($currentPage - 1) * $this->perPage . ', ' . $this->perPage);
-            $this->contentArray = $requete->fetchAll();
+            echo ($requete->queryString) ;
+            $this->contentArray = $requete->fetchAll(PDO::FETCH_ASSOC);
             $requete->closeCursor();
             return $this->contentArray;
         }
@@ -48,10 +50,10 @@ class Pagination
         echo '</ul>';
     }
 
-    public function __construct($perPage, $table, $column)
+    public function __construct(int $perPage, string $table, string $column, string $where="")
     {
         $this->perPage = $perPage;
-        $this->initPager($table, $column);
+        $this->initPager($table, $column, $where);
     }
 
 }

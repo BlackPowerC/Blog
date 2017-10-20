@@ -22,20 +22,7 @@ class Page
 
     public static function getNavbar($home = "index")
     {
-        echo '<nav class="navbar navbar-inverse">';
-        echo '<div class="container-fluid">';
-        echo '<div class="navbar-header">';
-        echo '<span class="navbar-brand">BLOG</span>';
-        echo '</div>';
-        echo '<ul class="nav navbar-nav">';
-        echo '<li><a class="active" href="' . $home . '.php"><i class="glyphicon glyphicon-home"></i> Accueil</a></li>';
-        echo '<li><a href="be_user.php"><i class="glyphicon glyphicon-user"></i> Espace Utilisateur</a></li>';
-        echo '<li><a href="../backend/index.php">Espace Administrateur</a></li>';
-        echo '<li><a href="connexion.php">Connexion</a></li>';
-        echo '<li><a href="inscription.php?msg=good_action"><i class="glyphicon glyphicon-register"></i> Inscription</a></li>';
-        echo '<ul/>';
-        echo '</div>';
-        echo '</nav>';
+        
     }
 
     public static function getLoginform()

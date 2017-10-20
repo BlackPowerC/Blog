@@ -3,7 +3,9 @@
     Page::getHead();
     ?>
     <body>
-        <?php Page::getNavbar("index"); ?>
+        <header>
+            <?php include_once '../views/navbarView.php'; ?>
+        </header>
         <div class="container container-fluid">		
             <div class="row">
                 <div class ="side_content col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -59,5 +61,5 @@
     </body>
 </html>
 <?php
-    var_dump($_SERVER) ;
- ?>
+//var_dump($_SERVER);
+?>

@@ -8,14 +8,14 @@ if (isset($_SESSION["token"]))
 require_once '../classe/Pages.php';
 ?>
 <html>
-    <?php
-    Page::getHead("Connexion");
-    Page::getNavbar();
-    ?>
-    <header class="text-center">
-        <h1>Page de connexion</h1>
-    </header>
+    <?php Page::getHead("Connexion"); ?>
     <body>
+        <header>
+            <?php include_once '../views/navbarView.php'; ?>
+        </header>
+        <div class="text-center">
+            <h1>Inscription</h1>
+        </div>
         <?php Page::getLoginForm(); ?>
     </body>
 </html>

@@ -3,7 +3,7 @@ session_start();
 if (isset($_SESSION["token"]))
 {
     header("Location: index.php");
-    exit() ;
+    exit();
 }
 
 require_once '../classe/Pages.php';
@@ -11,13 +11,15 @@ require_once '../classe/Pages.php';
 <html>
     <?php
     Page::getHead("Inscription");
-    Page::getNavbar();
     ?>
     <body>
-        <header class="text-center">
-            <h1>Inscription</h1>
+        <header>
+            <?php include_once '../views/navbarView.php'; ?>
         </header>
         <div class="main_content container container-fluid">
+            <div class="text-center">
+                <h1>Inscription</h1>
+            </div>
             <div class="row" style="margin-bottom: 25px;">
                 <?php
                 if (isset($_GET["msg"]))

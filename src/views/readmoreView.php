@@ -2,9 +2,11 @@
 <html>
     <?php
     Page::getHead($t_article->getTitre());
-    Page::getNavbar();
     ?>
     <body>
+        <header>
+            <?php include_once '../views/navbarView.php'; ?>
+        </header>
         <div class="container container-fluid">
             <div class="row">
                 <div class ="side_content col-xs-3 col-sm-3 col-md-3 col-lg-3">

@@ -1,7 +1,7 @@
 <html>
     <?php
     Page::getHead();
-    Page::getNavbar();
+    include_once 'beuserView.php';
     function LastConnextion($time)
     {
         $tmp = 0;
