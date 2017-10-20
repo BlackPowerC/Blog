@@ -36,29 +36,7 @@
             <h1 class="text-center">Page de rédaction</h1>
         </header>
 
-        <div class="main_content container container-fluid">
-            <?php
-            if (isset($_GET['msg']))
-            {
-                $msg = (int) strip_tags($_GET['msg']);
-                switch ($msg)
-                {
-                    case 1:
-                        ?>
-                        <div class="alert alert-danger" >
-                            Une erreur est survenue lors de l'action ! 
-                        </div>
-                        <?php
-                        break;
-                    case 0:
-                        ?>
-                        <div class="alert alert-success" >
-                            Action bien exécutée ! 
-                        </div>
-                    <?php
-                }
-            }
-            ?>
+        <div class="main_content container container-fluid">          
             <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6">
                 <form action="../post/post_rediger.php" method="POST">
                     <div class="form-group input_content">
@@ -163,4 +141,26 @@
             </div>
         </div>
     </body>
+    <?php
+    if (isset($_GET['msg']))
+    {
+        $msg = (int) strip_tags($_GET['msg']);
+        switch ($msg)
+        {
+            case 1:
+                ?>
+                <script type="text/javascript">
+                    window.alert("Une erreur est survenue lors de l'action !");
+                </script>
+                <?php
+                break;
+            case 0:
+                ?>
+                <script type="text/javascript">
+                    window.alert("Action bien exécutée !");
+                </script>
+            <?php
+        }
+    }
+    ?>
 </html>

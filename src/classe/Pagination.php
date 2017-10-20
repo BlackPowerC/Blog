@@ -18,14 +18,18 @@ class Pagination
         $this->nPage = (integer) ceil($this->nItem / $this->perPage);
         $requete->closeCursor() ;
     }
-
+    
+    public function getNItem(): int
+    {
+        return $this->nItem;
+    }
+    
     public function initContent($currentPage, $sqlStatement)
     {
         $this->currentPage = $currentPage ;
         if ($currentPage >= 1 AND $currentPage <= $this->nPage)
         {
             $requete = Database::getInstance()->getInstance()->getPDO()->query($sqlStatement . ' LIMIT ' . ($currentPage - 1) * $this->perPage . ', ' . $this->perPage);
-            echo ($requete->queryString) ;
             $this->contentArray = $requete->fetchAll(PDO::FETCH_ASSOC);
             $requete->closeCursor();
             return $this->contentArray;

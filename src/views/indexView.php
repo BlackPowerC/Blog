@@ -16,6 +16,16 @@
                 <div class="main_content col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <!-- end login_content -->
                     <?php
+                    if (isset($_GET['keyword']))
+                    {
+                        ?>
+                        <div class="alert alert-info">
+                            Résultats de la recherche: <span class="badge"><?php echo $pages->getNItem(); ?> article(s)</span>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
                     if ($data)
                     {
                         foreach ($data as $datas)
@@ -60,6 +70,3 @@
         </div>
     </body>
 </html>
-<?php
-//var_dump($_SERVER);
-?>

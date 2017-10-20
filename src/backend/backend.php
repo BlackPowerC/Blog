@@ -29,8 +29,6 @@ class backendController
         $requete->execute(array("id_user"=>$_SESSION['id'])) ;
         $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
         include_once '../views/backend/backend_redigerView.php';
-        var_dump($articles) ;
-        echo count($articles);
     }
 
 }

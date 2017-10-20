@@ -1,7 +1,7 @@
 <html>
     <?php
     Page::getHead();
-    include_once 'beuserView.php';
+    include_once 'navbarView.php';
     function LastConnextion($time)
     {
         $tmp = 0;
@@ -51,7 +51,7 @@
             </div>
         </div>
         <?php
-        var_dump($_SESSION) ;
+//        var_dump($_SESSION) ;
         ?>
     </body>
 </html>
