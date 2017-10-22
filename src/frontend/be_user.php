@@ -13,7 +13,6 @@ class beuserController
         $_type = [1=>"Utilisateur normal", 2=> "Auteur"] ;
         include_once '../views/beuserView.php' ;
     }
-
 }
 
 $bec = new beuserController() ;

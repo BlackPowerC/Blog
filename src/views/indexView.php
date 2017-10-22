@@ -66,7 +66,6 @@
                 </div>
                 <!-- end main_content -->
             </div>
-
         </div>
     </body>
 </html>
