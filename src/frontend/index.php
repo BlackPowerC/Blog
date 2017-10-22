@@ -27,26 +27,25 @@ class indexController
             }
         }
     }
-    
+
     public function searchAction(int $page, string $keyword)
     {
-        $pages = new Pagination(5, "article", "article.id", "WHERE article.titre LIKE '%$keyword%' OR article.text LIKE '%$keyword%'");
+        $pages = new Pagination(5, "article", "article.id", "WHERE article.titre LIKE '%{$keyword}%' OR article.text LIKE '%{$keyword}%'");
         $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                             FROM article a 
                             LEFT JOIN comment c ON a.id = c.id_article 
-                            WHERE a.titre LIKE '%$keyword%' OR a.text LIKE '%$keyword%' 
-                            GROUP by a.id" ;
+                            WHERE a.titre LIKE '%{$keyword}%' OR a.text LIKE '%{$keyword}%' 
+                            GROUP by a.id";
         $data = $pages->initContent($page, $sqlStatement);
         include_once '../views/indexView.php';
     }
-
 
     public function indexAction(int $page, string $tag)
     {
         $pages = new Pagination(5, "article", "article.id");
         /* Récupération des articles */
         $sqlStatement = "";
-        
+
         if ($tag == "")
         {
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
@@ -54,8 +53,7 @@ class indexController
                             LEFT JOIN comment c
                             ON a.id = c.id_article
                             GROUP by a.id";
-        }
-        else
+        } else
         {
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                             FROM article a
@@ -72,12 +70,11 @@ class indexController
 
 $ic = new indexController();
 
-if(isset($_GET['keyword']))
+if (isset($_GET['keyword']))
 {
-    $keyword = strip_tags($_GET['keyword']) ;
-    $ic->searchAction((isset($_GET['page']) ? (int) strip_tags($_GET['page']) : 1), $keyword) ;
-}
-else
+    $keyword = strip_tags($_GET['keyword']);
+    $ic->searchAction((isset($_GET['page']) ? (int) strip_tags($_GET['page']) : 1), $keyword);
+} else
 {
     $ic->indexAction((isset($_GET['page']) ? (int) strip_tags($_GET['page']) : 1), (isset($_GET['tag']) ? (string) strip_tags($_GET['tag']) : ""));
 }
