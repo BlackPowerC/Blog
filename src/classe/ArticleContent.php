@@ -43,10 +43,4 @@ class ArticleContent
     {
         $this->t_comment = $t_comment;
     }
-
-    public function toHTML()
-    {
-        
-    }
-
 }

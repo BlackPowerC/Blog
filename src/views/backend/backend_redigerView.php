@@ -30,9 +30,9 @@
     ?>
 
     <body>
-        <!-- Barre de navigation -->
-        <?php include_once 'backend_part_nav.php'; ?>
         <header>
+            <!-- Barre de navigation -->
+            <?php include_once 'backend_part_nav.php'; ?>
             <h1 class="text-center">Page de rédaction</h1>
         </header>
 

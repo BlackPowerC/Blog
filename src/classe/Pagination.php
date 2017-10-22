@@ -59,9 +59,4 @@ class Pagination
         $this->perPage = $perPage;
         $this->initPager($table, $column, $where);
     }
-    
-    public function getNItem(): int
-    {
-        return $this->nItem ;
-    }
 }

@@ -14,16 +14,6 @@
                     ?>
                 </div>
                 <div class="main_content col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <?php
-                    if (isset($_GET['keyword']))
-                    {
-                        ?>
-                    <div class="alert alert-info">
-                        Résultat de la recherche : <?php echo $pages->getNItem(); ?> article(s) !
-                    </div>
-                        <?php
-                    }
-                    ?>
                     <!-- end login_content -->
                     <?php
                     if (isset($_GET['keyword']))
