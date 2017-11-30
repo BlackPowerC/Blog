@@ -58,6 +58,7 @@ class indexController
         }
         else
         {
+            $pages->initPager("SELECT COUNT(t.id_article) as nItem FROM tag WHERE t.tag LIKE '%{$tag}%'") ;
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                                 FROM article a
                                 LEFT JOIN comment c ON a.id = c.id_article

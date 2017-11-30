@@ -99,7 +99,7 @@ class Pagination
             $requete->closeCursor();
             return $this->contentArray;
         }
-        return null;
+        return array();
     }
     
     /**
