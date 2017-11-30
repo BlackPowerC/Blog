@@ -29,8 +29,9 @@ class Pagination
     {
         /* 'select COUNT(' . $column . ') AS nItem FROM ' . $table.' '.$where */
         $requete = Database::getInstance()->getInstance()->getPDO()->query($countRequest);
-        $reponse = $requete->fetch(PDO::FETCH_NUM);
+        $reponse = $requete->fetchAll(PDO::FETCH_NUM);
         $this->nItem = (integer) $reponse[0];
+        var_dump($this->nItem) ;
         $this->nPage = (integer) ceil($this->nItem / $this->perPage);
         $requete->closeCursor() ;
     }
