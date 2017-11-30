@@ -27,42 +27,45 @@ class indexController
         }
     }
 
-    public function searchAction(int $page, string $keyword)
+    public function searchAction(int $pageNum, string $keyword)
     {
-        $pages = new Pagination(5, "article", "article.id", "WHERE article.titre LIKE '%{$keyword}%' OR article.text LIKE '%{$keyword}%'");
+        $pages = new Pagination(5);
+        $pages->initPager("SELECT COUNT (article.id) as nItem
+                                    FROM article 
+                                    WHERE article.titre LIKE '%{$keyword}%' OR article.texte LIKE '%{$keyword}%'") ;
         $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                             FROM article a 
                             LEFT JOIN comment c ON a.id = c.id_article 
                             WHERE a.titre LIKE '%{$keyword}%' OR a.text LIKE '%{$keyword}%' 
                             GROUP by a.id" ;
-        $data = $pages->initContent($page, $sqlStatement);
+        $data = $pages->initContent($pageNum, $sqlStatement);
         include_once '../views/indexView.php';
     }
 
     public function indexAction(int $page, string $tag)
     {
-        $pages = new Pagination(5, "article", "article.id");
+        $pages = new Pagination(5) ;
         /* Récupération des articles */
         $sqlStatement = "";
 
-        if ($tag == "")
+        if($tag == "")
         {
+            $pages->initPager("SELECT COUNT (article.id) as nItem FROM article") ;
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
-                            FROM article a
-                            LEFT JOIN comment c
-                            ON a.id = c.id_article
-                            GROUP by a.id";
+                                FROM article a
+                                    LEFT JOIN comment c ON a.id = c.id_article
+                                    GROUP by a.id";
         }
         else
         {
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
-                            FROM article a
-                            LEFT JOIN comment c ON a.id = c.id_article
-                            RIGHT JOIN tag t ON a.id = t.id_article
-                            WHERE t.tag LIKE '$tag'
-                            GROUP by a.id";
+                                FROM article a
+                                LEFT JOIN comment c ON a.id = c.id_article
+                                RIGHT JOIN tag t ON a.id = t.id_article
+                                WHERE t.tag LIKE '{$tag}'
+                                GROUP by a.id";
         }
-        $data = $pages->initContent($page, $sqlStatement, "WHERE ");
+        $data = $pages->initContent($page, $sqlStatement);
         include_once '../views/indexView.php';
     }
 

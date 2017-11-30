@@ -35,21 +35,59 @@ class Pagination
         $requete->closeCursor() ;
     }
     
+    /* Getters and Setter */
+    // nItem
     /**
-     * Renvoie le nombre total de page
+     * Renvoie le nombre total d'articles
      * @return int
      */
     public function getNItem(): int
     {
         return $this->nItem;
     }
+    public function setNItem(int $i)
+    {
+        $this->nItem = $i ;
+        return $this;
+    }
     
+    // nPage
+    /**
+     * Renvoie le nombre total de pages
+     * @return int
+     */
+    public function getNPage(): int
+    {
+        return $this->nPage ;
+    }
+    public function setNPage(int $i)
+    {
+        $this->nPage = $i ;
+        return $this ;
+    }
+    
+    // perPage
+    /**
+     * Renvoie le nombre d'article par pages
+     * @return int
+     */
+    public function getPerPage(): int
+    {
+        return $this->perPage ;
+    }
+    public function setPerPage(int $i)
+    {
+        $this->perPage = $i ;
+        return $this ;
+    }
+
+
     /**
      * Initialiser le contenu de pagination
      * 
-     * @param int $currentPage: le numero de la page courante
-     * @param string $selectQuery: Requête SQL de type Select pour récupérer un certain nombre d'article
-     * @return un tableau contenant les articles ou null
+     * @param int $currentPage le numero de la page courante
+     * @param string $selectQuery Requête SQL de type Select pour récupérer un certain nombre d'article
+     * @return array tableau contenant les articles ou null
      */
     public function initContent($currentPage, $selectQuery): array
     {
@@ -66,7 +104,7 @@ class Pagination
     
     /**
      * Ecrit du code HTML pour afficher la pagination sous forme de lien numeroté
-     * @param string $uri: l'URL de la page courante
+     * @param string $uri l'URL de la page courante
      */
     public function getPagination(string $uri)
     {
@@ -86,11 +124,13 @@ class Pagination
     }
     
     /**
-     * Constructeur de la class
-     * @param int $perPage: Le nombre d'article par page
+     * Constructeur de la classe
+     * @param int $perPage Le nombre d'article par page
      */
     public function __construct(int $perPage)
     {
         $this->perPage = $perPage;
     }
+    
+    
 }
