@@ -30,7 +30,7 @@ class indexController
     public function searchAction(int $pageNum, string $keyword)
     {
         $pages = new Pagination(5);
-        $pages->initPager("SELECT COUNT (article.id) as nItem
+        $pages->initPager("SELECT COUNT(article.id) as nItem 
                                     FROM article 
                                     WHERE article.titre LIKE '%{$keyword}%' OR article.texte LIKE '%{$keyword}%'") ;
         $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
@@ -50,7 +50,7 @@ class indexController
 
         if($tag == "")
         {
-            $pages->initPager("SELECT COUNT (article.id) as nItem FROM article") ;
+            $pages->initPager("SELECT COUNT(article.id) as nItem FROM article") ;
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                                 FROM article a
                                     LEFT JOIN comment c ON a.id = c.id_article
@@ -62,7 +62,7 @@ class indexController
                                 FROM article a
                                 LEFT JOIN comment c ON a.id = c.id_article
                                 RIGHT JOIN tag t ON a.id = t.id_article
-                                WHERE t.tag LIKE '{$tag}'
+                                WHERE t.tag LIKE '%{$tag}%'
                                 GROUP by a.id";
         }
         $data = $pages->initContent($page, $sqlStatement);
