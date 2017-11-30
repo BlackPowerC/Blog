@@ -77,7 +77,8 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
     }
     header("Location: ../backend/backend.php?link=rediger?msg=1");
     exit();
-} else
+}
+else
 {
     header("Location: ../frontend/connexion.php");
     exit();

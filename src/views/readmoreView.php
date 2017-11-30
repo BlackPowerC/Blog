@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
     <?php
     Page::getHead($t_article->getTitre());
@@ -22,6 +22,7 @@
                             <?php echo $HTMLView['date'] ?>
                         </div>
                         <!-- end article_header_content -->
+                        
                         <div class="article_text_content">
                             <?php
                             echo html_entity_decode($HTMLView['text']);
@@ -85,7 +86,7 @@
                                     {
                                         ?>
                                         <!-- Lien de réponse -->
-                                        <a>Répondre</a>
+                                        <button class="btn btn-primary" onclick="reply();">Répondre</button>
                                         <?php
                                         if ($comment->getId_user() == $_SESSION['id'])
                                         {
@@ -137,13 +138,13 @@
                                     <!-- end form_control_content -->
                                     <input hidden="" type="number" name="id_article" value="<?php echo $t_article->getId(); ?>" >
                                     <input hidden="" type="text" name="uri" value="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-                                    <input hidden="" type="text" name="operation" value="<?php
-                                    if (isset($_POST["operation"]))
-                                    {
-                                        echo $_POST["operation"];
-                                    } else
-                                        echo 'insert';
-                                    ?>"/>
+                                    <input id="operation" hidden="" type="text" name="operation" value="<?php
+                                           if (isset($_POST["operation"]))
+                                           {
+                                               echo $_POST["operation"];
+                                           } else
+                                               echo 'insert';
+                                           ?>"/>
                                            <?php
                                            if (isset($_POST['id_comment']))
                                            {

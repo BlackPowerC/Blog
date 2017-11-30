@@ -11,7 +11,6 @@ require_once '../classe/Tag.php';
 
 class readmoreController
 {
-
     public function __construct()
     {
         if (isset($_SESSION['token']) AND isset($_SESSION['persist']))

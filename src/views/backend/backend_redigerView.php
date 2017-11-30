@@ -36,65 +36,73 @@
             <h1 class="text-center">Page de rédaction</h1>
         </header>
 
-        <div class="main_content container container-fluid">          
-            <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6">
-                <form action="../post/post_rediger.php" method="POST">
-                    <div class="form-group input_content">
-                        <!-- Zone de titre -->
-                        <label for="titre">Titre</label><br/>
-                        <input class="form-control" name="titre" type="text" required="required" value="<?php
-                        if (isset($_POST['titre']))
-                        {
-                            echo strip_tags($_POST['titre']);
-                        }
-                        ?>"/>
-                    </div>
-                    <div class="form-group input_content">
-                        <!-- Zone de Rédaction -->
-                        <label for="content">Rédiger</label><br/>
-                        <script src="http://localhost/js_text_editor/ckeditor/ckeditor.js"></script>
-                        <textarea id="text" name="text" rows="" cols="" required="required">
-                            <?php
-                            if (isset($_POST['text']))
+        <div class="main_content container container-fluid">   
+            <!-- Onglet de navigation -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#redaction" >Rédiger <i class="glyphicon glyphicon-eye-open"></i></a></li>
+                <li><a data-toggle="tab" href="#historique">Historique <i class="glyphicon glyphicon-pencil"></i></a></li>
+            </ul>
+            <!-- Onglet rédaction -->
+            <div class="tab-content">
+                <div id="redaction" class="tab-pan fade in active">
+                    <form action="../post/post_rediger.php" method="POST">
+                        <div class="form-group input_content">
+                            <!-- Zone de titre -->
+                            <label for="titre">Titre</label><br/>
+                            <input class="form-control" name="titre" type="text" required="required" value="<?php
+                            if (isset($_POST['titre']))
                             {
-                                echo html_entity_decode($_POST['text']);
+                                echo strip_tags($_POST['titre']);
                             }
-                            ?>
-                        </textarea>
-                        <input type="number" hidden="" name="id" value="<?php
-                        if (isset($_POST['id']))
-                        {
-                            echo (integer) strip_tags($_POST['id']);
-                        } else
-                        {
-                            echo (int) $articles[count($articles) - 1]['id'];
-                        }
-                        ?>">
-                        <script type="text/javascript">CKEDITOR.replace('text');</script>
-                        <input hidden="" name="operation" value="<?php
-                        if (isset($_POST['operation']))
-                        {
-                            echo strip_tags($_POST['operation']);
-                        } else
-                            echo 'insert';
-                        ?>"/>
-                        <a target="blank" href="http://localhost/js_text_editor/ckeditor/samples/toolbarconfigurator/index.html#basic">Configurer</a>
-                    </div>
+                            ?>"/>
+                        </div>
+                        <div class="form-group input_content">
+                            <!-- Zone de Rédaction -->
+                            <label for="content">Rédiger</label><br/>
+                            <script src="http://localhost/js_text_editor/ckeditor/ckeditor.js"></script>
+                            <textarea id="text" name="text" rows="" cols="" required="required">
+                                <?php
+                                if (isset($_POST['text']))
+                                {
+                                    echo html_entity_decode($_POST['text']);
+                                }
+                                ?>
+                            </textarea>
+                            <input type="number" hidden="" name="id" value="<?php
+                            if (isset($_POST['id']))
+                            {
+                                echo (integer) strip_tags($_POST['id']);
+                            } else
+                            {
+                                echo (int) $articles[count($articles) - 1]['id'];
+                            }
+                            ?>">
+                            <script type="text/javascript">CKEDITOR.replace('text');</script>
+                            <input hidden="" name="operation" value="<?php
+                            if (isset($_POST['operation']))
+                            {
+                                echo strip_tags($_POST['operation']);
+                            } else
+                                echo 'insert';
+                            ?>"/>
+                            <a target="blank" href="http://localhost/js_text_editor/ckeditor/samples/toolbarconfigurator/index.html#basic">Configurer</a>
+                        </div>
 
-                    <div class="form-group input_content">
-                        <!-- Zone de tags -->
-                        <label for="tags">Etiquettes </label>
-                        <input class="form-control" type="text" name="tags" value="<?php echo $tags; ?>"/>
-                    </div>
-                    <div class="form_control_content">
-                        <input class="btn btn-primary" type="submit" name="Enregistrer" value="Enregistrer"/>
-                        <input class="btn btn-primary" type="reset" name="Effacer" value="Effacer"/>
-                    </div>
-                </form>
+                        <div class="form-group input_content">
+                            <!-- Zone de tags -->
+                            <label for="tags">Etiquettes </label>
+                            <input class="form-control" type="text" name="tags" value="<?php echo $tags; ?>"/>
+                        </div>
+                        <div class="form_control_content">
+                            <input class="btn btn-primary" type="submit" name="Enregistrer" value="Enregistrer"/>
+                            <input class="btn btn-primary" type="reset" name="Effacer" value="Effacer"/>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <!-- Zone d'historique -->
-            <div class="history_content col-sm-4 col-lg-4 col-md-4 col-xs-4">
+            <!-- Onglet historique -->
+            <div id="historique" class="history_content tab-pan fade">
                 <table class="table table-striped">
                     <thead>
                     <td>Titre</td>

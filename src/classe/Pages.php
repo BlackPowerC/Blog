@@ -18,6 +18,7 @@ class Page
         echo '<link rel="stylesheet" href="http://localhost/css_framework/font-awesome/css/font-awesome.min.css"/>';
         echo '<link rel="stylesheet" type="text/css" href="../../css/style.css"/>';
         echo '<script src="http://localhost/css_framework/bootstrap/js/bootstrap.min.js"></script>';
+        echo '<script src="http://localhost/js_framework/jquery/3.2.1/jquery.min.js"></script>';
         echo '</head>';
     }
 

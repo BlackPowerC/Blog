@@ -13,36 +13,67 @@
  */
 class Form
 {
-    private $data ;
-    private $surround ;
-    private $keys ;
-    private $i ;
-    private $l ;
-    
-    public function __construct($data = array())
+
+    private $method;
+    private $action;
+    /*     * ************ */
+    private $data;
+    private $surround;
+    private $keys;
+    private $i;
+    private $l;
+
+    public function __construct($data = array(), string $method = "POST", string $action = "")
     {
-        $this->data = $data ;
-        $this->surround = 'p' ;
-        $this->keys = array_keys($data) ;
-        $this->i = 0 ;
-        $this->l = count($data) ;
+        $this->data = $data;
+        $this->surround = 'div';
+        $this->keys = array_keys($data);
+        /*         * ********************************* */
+        $this->i = 0;
+        $this->l = count($data);
+        /*         * ********************************* */
+        $this->method = $method;
+        $this->action = $action;
     }
-    
+
     private function surround($html)
     {
-        echo "<div class=\"form-group\">{$html}</div" ;
+        echo "<{$this->surround} class=\"form-group\">{$html}</{$this->surround}>";
     }
-    
-    public function input(array $param = ["type"=>"text", "placeholder"=>"", "required"=>"", "hidden"=>""], string $css)
+
+    public function input()
     {
-        $css = strtolower($css) ;
-        $html = "" ;
-        if($this->i < $this->l)
-        {
-            $html .= '<label for="'.$this->keys[$this->i].'"></label>' ;
-            $html .='<input class="'.$css.'" type="'.$param["type"].'" name="'.$this->keys[$this->i].'" value="'.$this->data[$this->keys[$this->i]].'" placeholder="'.$param['placeholder'].'" />';
-            $this->i++ ;
-            $this->surround($html) ;
-        }
+        
     }
+
+    public function submit()
+    {
+        
+    }
+
+    public function createView()
+    {
+        
+    }
+
+    function getMethod()
+    {
+        return $this->method;
+    }
+
+    function getAction()
+    {
+        return $this->action;
+    }
+
+    function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    function setAction($action)
+    {
+        $this->action = $action;
+    }
+
 }

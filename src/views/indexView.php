@@ -3,7 +3,7 @@
     Page::getHead();
     ?>
     <body>
-        <header>
+        <header id="header">
             <?php include_once '../views/navbarView.php'; ?>
         </header>
         <div class="container container-fluid">		
@@ -16,7 +16,7 @@
                 <div class="main_content col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <!-- end login_content -->
                     <?php
-                    if (isset($_GET['keyword']))
+                    if (isset($_GET['keyword']) or isset($_GET['tag']))
                     {
                         ?>
                         <div class="alert alert-info">
@@ -68,4 +68,7 @@
             </div>
         </div>
     </body>
+    <?php
+                var_dump($pages);
+    ?>
 </html>

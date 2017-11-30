@@ -9,7 +9,6 @@ require_once '../classe/Pages.php';
 
 class indexController
 {
-
     public function __construct()
     {
         if (isset($_SESSION['token']) AND isset($_SESSION['persist']))
@@ -53,7 +52,8 @@ class indexController
                             LEFT JOIN comment c
                             ON a.id = c.id_article
                             GROUP by a.id";
-        } else
+        }
+        else
         {
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
                             FROM article a
@@ -62,19 +62,19 @@ class indexController
                             WHERE t.tag LIKE '$tag'
                             GROUP by a.id";
         }
-        $data = $pages->initContent($page, $sqlStatement);
+        $data = $pages->initContent($page, $sqlStatement, "WHERE ");
         include_once '../views/indexView.php';
     }
 
 }
 
 $ic = new indexController();
-
 if (isset($_GET['keyword']))
 {
     $keyword = strip_tags($_GET['keyword']);
     $ic->searchAction((isset($_GET['page']) ? (int) strip_tags($_GET['page']) : 1), $keyword);
-} else
+}
+else
 {
     $ic->indexAction((isset($_GET['page']) ? (int) strip_tags($_GET['page']) : 1), (isset($_GET['tag']) ? (string) strip_tags($_GET['tag']) : ""));
 }
