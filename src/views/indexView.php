@@ -68,7 +68,4 @@
             </div>
         </div>
     </body>
-    <?php
-                var_dump($pages);
-    ?>
 </html>
