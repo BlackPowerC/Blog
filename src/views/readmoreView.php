@@ -40,7 +40,7 @@
                                 ?>
                             </div>
                         </div>
-
+                        <!-- Media sharing frontend -->
                         <div class="media-sharing">
                             <h4>Partager sur les réseaux sociaux</h4>
                             <?php
@@ -60,17 +60,24 @@
                                 ?>
                             </span>
                         </div>
+                        <!-- Frontend du système de vote -->
                         <div class="vote">
                             <div class="vote_bar">
                                 <div class="vote_progress"></div>
                             </div>
                             <div class="vote_btns">
-                                <button class="vote_btn like">
-                                    <i class="fa fa-thumbs-up"> 45</i>
-                                </button>
-                                <button class="vote_btn dislike">
-                                    <i class="fa fa-thumbs-down"> 10</i>
-                                </button>
+                                <!-- Like -->
+                                <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
+                                    <button type="submit" class="vote_btn like"><i class="fa fa-thumbs-up"> 45</i></button>
+                                    <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
+                                    <input hidden="" type="number" name="vote" value="1"/>
+                                </form>
+                                <!-- dislike -->
+                                <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
+                                    <button type="submit" class="vote_btn dislike"><i class="fa fa-thumbs-down"> 10</i></button>
+                                    <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
+                                    <input hidden="" type="number" name="vote" value="0"/>
+                                </form>
                             </div>
                         </div>
                         <!-- end article_text_content -->
