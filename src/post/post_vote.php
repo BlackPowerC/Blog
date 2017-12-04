@@ -20,18 +20,19 @@ if (isset($_SESSION["token"]))
         $pdo = Database::getInstance()->getPDO();
         /* Vérification du vote */
         $action = $pdo->prepare("SELECT type FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
-        $action->bindValue(":id_user", $_SESSION["id_user"], PDO::PARAM_INT);
+        $action->bindValue(":id_user", $_SESSION["id"], PDO::PARAM_INT);
         $action->bindValue(":id_article", $id_article, PDO::PARAM_INT);
         $action->execute();
-        $result = $action->fetch(PDO::FETCH_INT);
+        $result = $action->fetch(PDO::FETCH_NUM);
+        var_dump($result) ;
         $action->closeCursor();
         /* L'utilisateur n'a pas encore vté */
-        if (count($result) == 0)
+        if (count($result) == 0 || !$result)
         {
             $insert = $pdo->prepare("INSERT INTO vote_article VALUES(:id_user, :id_article, :vote)");
-            $insert->bindValue(":id_user", $_SESSION["id_user"], PDO::PARAM_INT);
-            $insert->bindValue(":id_user", $id_article, PDO::PARAM_INT);
-            $insert->bindValue(":vote", $vote, PDO::PARAM_INT);
+            $insert->bindValue(":id_user", $_SESSION["id"], PDO::PARAM_INT);
+            $insert->bindValue(":id_article", $id_article, PDO::PARAM_INT);
+            $insert->bindValue(":vote", $vote, PDO::PARAM_BOOL);
             $insert->execute();
             $insert->closeCursor();
         }
@@ -41,38 +42,25 @@ if (isset($_SESSION["token"]))
             if ($vote == $result[0])
             {
                 $delete = $pdo->prepare("DELETE FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
+                $delete->bindValue(":id_user", $_SESSION["id"], PDO::PARAM_INT);
+                $delete->bindValue(":id_article", $id_article, PDO::PARAM_INT);
                 $delete->execute();
                 $delete->closeCursor();
             }
             /* Sinon une mise à jour */ else
             {
-                $update = $pdo->prepare("UPDATE vote_article set type=:type WHERE id_user=:id_user AND id_article=:id_article");
-                $update->bindValue(":id_user", $_SESSION["id_user"], PDO::PARAM_INT);
-                $update->bindValue(":id_user", $id_article, PDO::PARAM_INT);
-                $update->bindValue(":vote", !$vote, PDO::PARAM_INT);
+                echo 'rtt';
+                $vote = !$vote;
+                $update = $pdo->prepare("UPDATE vote_article SET type=:type WHERE id_user=:id_user AND id_article=:id_article");
+                $update->bindValue(":id_user", $_SESSION["id"], PDO::PARAM_INT);
+                $update->bindValue(":id_article", $id_article, PDO::PARAM_INT);
+                $update->bindValue(":type", $vote, PDO::PARAM_BOOL);
                 $update->execute();
                 $update->closeCursor();
             }
         }
     }
-    else
-    {
-        /* redirection vers la page de provenance */
-        if(isset($_GET["uri"]))
-        {
-            header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
-            exit();
-        }
-        else
-        {
-            header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
-            exit();
-        }
-    }
 }
-else
-{
-    /* redirection en envoyant un message d'erreur */
-    header($string) ;
-    exit() ;
-}
+/* redirection en envoyant un message d'erreur */
+//header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
+//exit();
