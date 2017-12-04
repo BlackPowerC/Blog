@@ -5,7 +5,7 @@ class Page
 
     public static function getTinymce()
     {
-        echo '<script src="http://localhost/js_text_editor/tinymce/tinymce.min.js"></script>';
+        echo '<script src="../../ressource/js/tinymce/tinymce.min.js"></script>';
         echo "<script>tinymce.init({ selector:'textarea' });</script>";
     }
 
@@ -14,12 +14,12 @@ class Page
         echo '<head>';
         echo '<meta charset="utf-8"/>';
         echo '<title>' . $title . '</title>';
-        echo '<link rel="stylesheet" href="http://localhost/css_framework/bootstrap/css/bootstrap.min.css"/>';
-        echo '<link rel="stylesheet" href="http://localhost/css_framework/font-awesome/css/font-awesome.min.css"/>';
-        echo '<link rel="stylesheet" type="text/css" href="../../css/style.css"/>';
-        echo '<script src="http://localhost/css_framework/bootstrap/js/bootstrap.min.js"></script>';
-        echo '<script src="http://localhost/js_framework/jquery/3.2.1/jquery.min.js"></script>';
-        echo '<script src="http://localhost/css_framework/bootstrap/js/bootstrap.js"></script>';
+        echo '<link rel="stylesheet" href="../../ressource/bootstrap/css/bootstrap.min.css"/>';
+        echo '<link rel="stylesheet" href="../../ressource/font-awesome/css/font-awesome.min.css"/>';
+        echo '<link rel="stylesheet" type="text/css" href="../../ressource/css/style.css"/>';
+        echo '<script src="../../ressource/bootstrap/js/bootstrap.min.js"></script>';
+        echo '<script src="../../ressource/js/jquery.min.js"></script>';
+        echo '<script src="../../ressource//bootstrap/js/bootstrap.js"></script>';
         echo '</head>';
     }
 
