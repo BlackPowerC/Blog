@@ -22,7 +22,7 @@
                             <?php echo $HTMLView['date'] ?>
                         </div>
                         <!-- end article_header_content -->
-                        
+
                         <div class="article_text_content">
                             <?php
                             echo html_entity_decode($HTMLView['text']);
@@ -59,6 +59,19 @@
                                 echo $tw;
                                 ?>
                             </span>
+                        </div>
+                        <div class="vote">
+                            <div class="vote_bar">
+                                <div class="vote_progress"></div>
+                            </div>
+                            <div class="vote_btns">
+                                <button class="vote_btn like">
+                                    <i class="fa fa-thumbs-up"> 45</i>
+                                </button>
+                                <button class="vote_btn dislike">
+                                    <i class="fa fa-thumbs-down"> 10</i>
+                                </button>
+                            </div>
                         </div>
                         <!-- end article_text_content -->
                         <div class="article_comment_content">

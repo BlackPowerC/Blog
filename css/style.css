@@ -8,6 +8,58 @@ and open the template in the editor.
     Author     : jordy
 */
 
+.vote
+{
+    width: 150px;
+    float: right;
+}
+
+/* Barre de vote */
+.vote_bar, .vote_progress
+{
+    height: 4px;
+    display: inline;
+}
+
+.vote_bar
+{
+    width: 30%;
+    background-color: red ;
+}
+
+.vote_progress
+{
+    width: 70%;
+    background-color: green;
+}
+
+/* Bouton de vote */
+.vote_btns
+{
+    margin-top: 10px;
+    text-align: right;
+}
+.vote_btn
+{
+    border: none ;
+    padding: 0 ;
+    transition: color 0.3s;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 0 0 16px;
+    background: transparent;
+}
+
+.dislike:hover
+{
+    color: red;
+}
+
+.like:hover
+{
+    color: green;
+}
+
 .media-sharing
 {
     margin-top: 40px; 
