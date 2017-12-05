@@ -93,5 +93,24 @@ class Vote
             }
         }
     }
-
+    
+    public function getVoteResults(): array
+    {
+        $pdo = Database::getInstance()->getPDO() ;
+        $select = $pdo->query("SELECT vote_type FROM vote_article") ;
+        $results = $select->fetchAll(PDO::FETCH_NUM) ;
+        $votes = array("dislike"=>0, "like"=>0) ;
+        foreach ($results as $value)
+        {
+            if($value)
+            {
+                $votes["like"]++;
+            }
+            else
+            {
+                $votes["dislike"]++;
+            }
+        }
+        return $votes;
+    }
 }
