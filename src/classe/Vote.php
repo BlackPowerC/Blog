@@ -97,7 +97,7 @@ class Vote
     public static function getVoteResults(int $id_article): array
     {
         $pdo = Database::getInstance()->getPDO() ;
-        $select = $pdo->prepare("SELECT vote_type FROM vote_article WHERE id_article=?") ;
+        $select = $pdo->prepare("SELECT type FROM vote_article WHERE id_article=?") ;
         $select->execute([$id_article]);
         $results = $select->fetchAll(PDO::FETCH_NUM) ;
         $select->closeCursor();
