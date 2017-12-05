@@ -22,9 +22,9 @@ class Vote
 
     public function __construct(array $params)
     {
-        foreach ($params as $key)
+        foreach ($params as $key => $value)
         {
-            $this->$key = $params[$key];
+            $this->$key = $value;
         }
     }
 
@@ -64,7 +64,7 @@ class Vote
             $insert = Database::getInstance()->getPDO()->prepare("INSERT INTO vote_article VALUES(:id_user, :id_article, :vote)");
             $insert->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
             $insert->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
-            $insert->bindValue(":vote", $$this->type_vote, PDO::PARAM_BOOL);
+            $insert->bindValue(":vote", $this->type_vote, PDO::PARAM_BOOL);
             $insert->execute();
             $insert->closeCursor();
         }

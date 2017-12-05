@@ -24,8 +24,5 @@ if (isset($_SESSION["token"]))
     }
 }
 /* redirection en envoyant un message d'erreur */
-else
-{
-    header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
-    exit();
-}
+header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
+exit();
