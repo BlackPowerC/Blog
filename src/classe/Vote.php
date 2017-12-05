@@ -72,7 +72,7 @@ class Vote
         else
         {
             /* Même type de vote */
-            if ($$this->type_vote == $this->verifyVote()[0])
+            if ($this->type_vote == $this->verifyVote()[0])
             {
                 $delete = Database::getInstance()->getPDO()->prepare("DELETE FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
                 $delete->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
@@ -83,7 +83,7 @@ class Vote
             /* Sinon une mise à jour */
             else
             {
-                $$this->type_vote = !$this->type_vote;
+                $this->type_vote = !$this->type_vote;
                 $update = Database::getInstance()->getPDO()->prepare("UPDATE vote_article SET type=:type WHERE id_user=:id_user AND id_article=:id_article");
                 $update->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
                 $update->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
