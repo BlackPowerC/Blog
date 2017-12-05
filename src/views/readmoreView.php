@@ -62,8 +62,8 @@
                         </div>
                         <!-- Frontend du système de vote -->
                         <div class="vote">
-                            <div class="vote_bar">
-                                <div class="vote_progress"></div>
+                            <div style="width:<?php echo 100*ceil($vote_results["like"]/($vote_results["like"]+$vote_results["dislike"])) ?>%;" class="vote_bar">
+                                <div style="width:<?php echo 100*ceil($vote_results["dislike"]/($vote_results["like"]+$vote_results["dislike"])) ?>%;" class="vote_progress"></div>
                             </div>
                             <div class="vote_btns">
                                 <!-- Like -->
