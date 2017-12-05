@@ -94,12 +94,18 @@ class Vote
         }
     }
     
-    public function getVoteResults(): array
+    public static function getVoteResults(int $id_article): array
     {
         $pdo = Database::getInstance()->getPDO() ;
-        $select = $pdo->query("SELECT vote_type FROM vote_article") ;
+        $select = $pdo->prepare("SELECT vote_type FROM vote_article WHERE id_article=?") ;
+        $select->execute([$id_article]);
         $results = $select->fetchAll(PDO::FETCH_NUM) ;
+        $select->closeCursor();
         $votes = array("dislike"=>0, "like"=>0) ;
+        if(!$results)
+        {
+            return $votes ;
+        }
         foreach ($results as $value)
         {
             if($value)
