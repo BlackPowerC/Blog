@@ -13,5 +13,31 @@
  */
 class Vote
 {
+    private $id_user ;
+    private $id_article ;
+    private $type_vote ;
     
+    public function __construct(array $params)
+    {
+        foreach($params as $key)
+        {
+            $this->$key = $params[$key] ;
+        }
+    }
+    
+    public function setId_user(int $another)
+    {
+        $this->id_user = $another ;
+        return $this;
+    }
+    
+    public function getId_article()
+    {
+        return $this->id_article;
+    }
+    
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
 }
