@@ -8,6 +8,7 @@ require_once '../classe/Article.php';
 require_once '../classe/Comment.php';
 require_once '../classe/Pages.php';
 require_once '../classe/Tag.php';
+require_once '../classe/Vote.php';
 
 class readmoreController
 {
@@ -63,7 +64,9 @@ class readmoreController
         /* L'article en question */
         $t_article = new Article($article);
         $HTMLView = $t_article->toHTML();
-
+        
+        /* Les résultats du vote */
+        $vote_results = Vote::getVoteResults($id_article);
         include_once '../views/readmoreView.php';
     }
 
