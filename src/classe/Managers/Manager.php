@@ -22,9 +22,13 @@ abstract class Manager
         $this->pdo = Database::getInstance()->getPDO() ;
     }
 
-    public function insert() ;
+    public function findAll() ;
     
-    public function update() ;
+    public function findById(int $id) ;
+    
+    public function findByCriteria(string $criteria) ;
+
+    public function update(Article $a) ;
         
-    public function delete() ;
+    public function delete(int $id) ;
 }
