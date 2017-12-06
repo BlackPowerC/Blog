@@ -47,5 +47,10 @@ class Database
         }
         return self::$p_singleton;
     }
-
+    
+    public function prepare(string $sqlstatement)
+    {
+        return $this->pdo->prepare($sqlstatement) ;
+    }
+    
 }
