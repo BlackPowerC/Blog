@@ -101,7 +101,7 @@ class Vote
         $select->execute([$id_article]);
         $results = $select->fetchAll(PDO::FETCH_NUM) ;
         $select->closeCursor();
-        $votes = array("dislike"=>0, "like"=>0) ;
+        $votes = array("dislike"=>"0%", "like"=>"0%") ;
         if(!$results)
         {
             return $votes ;
@@ -117,6 +117,7 @@ class Vote
                 $votes["dislike"]++;
             }
         }
-        return $votes;
+        return array("likePercent"=>100*ceil($votes["like"]/($votes["like"]+$votes["dislike"])), 
+                     "dislikePercent"=>100*ceil($votes["dislike"]/($votes["like"]+$votes["dislike"])));
     }
 }
