@@ -10,6 +10,10 @@
  * Description of Vote
  *
  * @author jordy
+ * Vote permet de faire des votes positifs ou négatifs et d'avoir les résultats de vote pour un article
+ * @field $id_user Identifiant du votant
+ * @field $id_article Identifiant de l'article à voter
+ * @field $type_vote Le type de vote (like ou dislike)
  */
 require_once 'Database.php';
 
@@ -19,7 +23,11 @@ class Vote
     private $id_user;
     private $id_article;
     private $type_vote;
-
+    
+    /**
+     * 
+     * @param array $params constructeur de la classe avec $params contenant des clés qui sont les champs de la classe
+     */
     public function __construct(array $params)
     {
         foreach ($params as $key => $value)
@@ -93,7 +101,24 @@ class Vote
             }
         }
     }
-
+    
+    /**
+     * Permet de récupérer pour un article les résultats des votes
+     * @param int $id_article Identifiant de l'article dont on veut connaitre les résultats des votes
+     * @return array Un tableau à deux clés
+     * <p>
+     *  clé count, qui est le tableaa contenant le nombre de type de vote
+     *  <ol>
+     *      <li>like: le nombre de vote positif</li>
+     *      <li>dislike: le nombre de vote négatif</li>
+     *  </ol>
+     *  clé percent, qui est le tableau contenant les pourcentage de type de vote
+     *  <ol>
+     *      <li>likePercent: pourcentage de vote positif</li>
+     *      <li>dislikePercent: pourcentage de vote négatif</li>
+     *  </ol>
+     * </p>
+     */
     public static function getVoteResults(int $id_article): array
     {
         $pdo = Database::getInstance()->getPDO() ;
@@ -110,16 +135,16 @@ class Vote
         {
             if($value)
             {
-                $votes["like"]++;
+                $votes["count"]["like"]++;
             }
             else
             {
-                $votes["dislike"]++;
+                $votes["count"]["dislike"]++;
             }
         }
-        return array("percent"=>array("likePercent"=>100*ceil($votes["like"]/($votes["like"]+$votes["dislike"])), 
-                                      "dislikePercent"=>100*ceil($votes["dislike"]/($votes["like"]+$votes["dislike"]))), 
-                     "count"=>array("like"=>$votes['like'], 
-                                    "dislike"=>$votes["dislike"]));
+        return array("percent"=>array("likePercent"=>100*ceil($votes["count"]["like"]/($votes["count"]["like"]+$votes["count"]["dislike"])), 
+                                      "dislikePercent"=>100*ceil($votes["count"]["dislike"]/($votes["count"]["like"]+$votes["count"]["dislike"]))), 
+                     "count"=>array("like"=>$votes["count"]['like'], 
+                                    "dislike"=>$votes["count"]["dislike"]));
     }
 }
