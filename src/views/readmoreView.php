@@ -62,19 +62,19 @@
                         </div>
                         <!-- Frontend du système de vote -->
                         <div class="vote">
-                            <div style="width:<?php echo 100*ceil($vote_results["like"]/($vote_results["like"]+$vote_results["dislike"])) ?>%;" class="vote_bar">
-                                <div style="width:<?php echo 100*ceil($vote_results["dislike"]/($vote_results["like"]+$vote_results["dislike"])) ?>%;" class="vote_progress"></div>
+                            <div style="width:<?php echo $vote_results["percent"]["likePercent"] ?>%;" class="vote_bar">
+                                <div style="width:<?php echo $vote_results["percent"]["dislikePercent"] ?>%;" class="vote_progress"></div>
                             </div>
                             <div class="vote_btns">
                                 <!-- Like -->
                                 <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                                    <button type="submit" class="vote_btn like"><i class="fa fa-thumbs-up"> <?php echo $vote_results["like"]?></i></button>
+                                    <button type="submit" class="vote_btn like"><i class="fa fa-thumbs-up"> <?php echo $vote_results["count"]["like"]?></i></button>
                                     <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
                                     <input hidden="" type="number" name="vote" value="1"/>
                                 </form>
                                 <!-- dislike -->
                                 <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                                    <button type="submit" class="vote_btn dislike"><i class="fa fa-thumbs-down"> <?php echo $vote_results["dislike"]?></i></button>
+                                    <button type="submit" class="vote_btn dislike"><i class="fa fa-thumbs-down"> <?php echo $vote_results["count"]["dislike"]?></i></button>
                                     <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
                                     <input hidden="" type="number" name="vote" value="0"/>
                                 </form>
