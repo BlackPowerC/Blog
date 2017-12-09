@@ -93,7 +93,7 @@ class Vote
             }
         }
     }
-    
+
     public static function getVoteResults(int $id_article): array
     {
         $pdo = Database::getInstance()->getPDO() ;
@@ -101,7 +101,7 @@ class Vote
         $select->execute([$id_article]);
         $results = $select->fetchAll(PDO::FETCH_NUM) ;
         $select->closeCursor();
-        $votes = array("dislike"=>"0%", "like"=>"0%") ;
+        $votes = array("percent"=>array("likePercent"=>0, "dislikePercent"=>0), "count"=>array("like"=>0, "dislike"=>0)) ;
         if(!$results)
         {
             return $votes ;
@@ -117,7 +117,9 @@ class Vote
                 $votes["dislike"]++;
             }
         }
-        return array("likePercent"=>100*ceil($votes["like"]/($votes["like"]+$votes["dislike"])), 
-                     "dislikePercent"=>100*ceil($votes["dislike"]/($votes["like"]+$votes["dislike"])));
+        return array("percent"=>array("likePercent"=>100*ceil($votes["like"]/($votes["like"]+$votes["dislike"])), 
+                                      "dislikePercent"=>100*ceil($votes["dislike"]/($votes["like"]+$votes["dislike"]))), 
+                     "count"=>array("like"=>$votes['like'], 
+                                    "dislike"=>$votes["dislike"]));
     }
 }
