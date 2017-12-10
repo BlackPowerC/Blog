@@ -12,23 +12,17 @@
  */
 
 require_once '../Database.php';
+require_once '../Entity.php';
 
 abstract class Manager
 {
-    protected $pdo ;
-    
-    public function __construct()
-    {
-        $this->pdo = Database::getInstance()->getPDO() ;
-    }
-
     public function findAll() ;
     
     public function findById(int $id) ;
     
     public function findByCriteria(string $criteria) ;
 
-    public function update(Article $a) ;
+    public function update(Entity $a) ;
         
     public function delete(int $id) ;
 }
