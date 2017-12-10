@@ -35,13 +35,13 @@ class readmoreController
         $id_article = strip_tags($_GET['id_article']);
         /* L'article */
         
-        $requete = Database::getInstance()->getPDO()->prepare("SELECT * FROM article WHERE id = :id_article");
+        $requete = Database::getInstance()->prepare("SELECT * FROM article WHERE id = :id_article");
         $requete->execute(array('id_article' => $id_article));
         $article = $requete->fetch();
         $requete->closeCursor();
         
         /* Les commentaires de l'article */
-        $sqlCmtQuery = Database::getInstance()->getPDO()->prepare(
+        $sqlCmtQuery = Database::getInstance()->prepare(
                 "SELECT c.id, c.id_article, c.id_user, c.date, c.text, u.pseudo
                  FROM comment c
                  LEFT JOIN user u ON c.id_user = u.id
@@ -56,7 +56,7 @@ class readmoreController
                         LEFT JOIN article a 
                         ON t.id_article = a.id
                         WHERE t.id_article= :id_article" ;
-        $request_tags = Database::getInstance()->getPDO()->prepare($sql_tags);
+        $request_tags = Database::getInstance()->prepare($sql_tags);
         $request_tags->execute(array('id_article' => $id_article)) ;
         $response_tags = $request_tags->fetchAll(PDO::FETCH_ASSOC) ;
         $request_tags->closeCursor() ;

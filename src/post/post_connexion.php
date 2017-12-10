@@ -13,7 +13,7 @@ if (isset($_GET['action']))
                 $i = 0;
                 $pseudo = strip_tags($_POST['pseudo']);
                 $passe = strip_tags($_POST['passe']);
-                $requete = Database::getInstance()->getPDO()->prepare("SELECT * FROM user WHERE pseudo = :user_pseudo AND passe = :user_passe");
+                $requete = Database::getInstance()->prepare("SELECT * FROM user WHERE pseudo = :user_pseudo AND passe = :user_passe");
                 $requete->execute(array("user_passe" => $passe, "user_pseudo" => $pseudo));
                 $reponse = $requete->fetch(PDO::FETCH_ASSOC);
                 $requete->closeCursor();

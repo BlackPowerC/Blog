@@ -55,7 +55,7 @@ class Vote
     private function verifyVote()
     {
         /* Vérification du vote */
-        $action = Database::getInstance()->getPDO()->prepare("SELECT type FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
+        $action = Database::getInstance()->prepare("SELECT type FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
         $action->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
         $action->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
         $action->execute();
@@ -69,7 +69,7 @@ class Vote
         /* L'utilisateur n'a pas encore vté */
         if (count($this->verifyVote()) == 0 || !$this->verifyVote())
         {
-            $insert = Database::getInstance()->getPDO()->prepare("INSERT INTO vote_article VALUES(:id_user, :id_article, :vote)");
+            $insert = Database::getInstance()->prepare("INSERT INTO vote_article VALUES(:id_user, :id_article, :vote)");
             $insert->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
             $insert->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
             $insert->bindValue(":vote", $this->type_vote, PDO::PARAM_BOOL);
@@ -82,7 +82,7 @@ class Vote
             /* Même type de vote */
             if ($this->type_vote == $this->verifyVote()[0])
             {
-                $delete = Database::getInstance()->getPDO()->prepare("DELETE FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
+                $delete = Database::getInstance()->prepare("DELETE FROM vote_article WHERE id_user=:id_user AND id_article=:id_article");
                 $delete->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
                 $delete->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
                 $delete->execute();
@@ -92,7 +92,7 @@ class Vote
             else
             {
                 $this->type_vote = !$this->type_vote;
-                $update = Database::getInstance()->getPDO()->prepare("UPDATE vote_article SET type=:type WHERE id_user=:id_user AND id_article=:id_article");
+                $update = Database::getInstance()->prepare("UPDATE vote_article SET type=:type WHERE id_user=:id_user AND id_article=:id_article");
                 $update->bindValue(":id_user", $this->id_user, PDO::PARAM_INT);
                 $update->bindValue(":id_article", $this->id_article, PDO::PARAM_INT);
                 $update->bindValue(":type", $this->type_vote, PDO::PARAM_BOOL);
@@ -121,8 +121,7 @@ class Vote
      */
     public static function getVoteResults(int $id_article): array
     {
-        $pdo = Database::getInstance()->getPDO() ;
-        $select = $pdo->prepare("SELECT type FROM vote_article WHERE id_article=?") ;
+        $select = Database::getInstance()->prepare("SELECT type FROM vote_article WHERE id_article=?") ;
         $select->execute([$id_article]);
         $results = $select->fetchAll(PDO::FETCH_NUM) ;
         $select->closeCursor();

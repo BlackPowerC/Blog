@@ -19,7 +19,7 @@ if (isset($_SESSION["token"]))
                         $id_user = strip_tags($_SESSION["id"]);
 
                         $sql = "INSERT INTO comment values (NULL, :id_user, :id_article, :date, :comment)";
-                        $requete = Database::getInstance()->getPDO()->prepare($sql);
+                        $requete = Database::getInstance()->prepare($sql);
                         $requete->execute(array("id_article" => $id_article, "id_user" => $id_user, "date" => date("d-m-y"), "comment" => $comment));
                     }
                 }
@@ -27,7 +27,7 @@ if (isset($_SESSION["token"]))
             case 'delete':
                 $id_comment = strip_tags($_POST['id_comment']);
                 $sql = "DELETE FROM comment WHERE id = ?";
-                $requete = Database::getInstance()->getPDO()->prepare($sql);
+                $requete = Database::getInstance()->prepare($sql);
                 $requete->execute(array($id_comment));
                 $requete->closeCursor();
                 break;
@@ -39,7 +39,7 @@ if (isset($_SESSION["token"]))
                         $id_comment = strip_tags($_POST['id_comment']);
                         $text_comment = strip_tags($_POST['comment']);
                         $sql = "UPDATE comment SET text = :text_comment, date = :date_comment WHERE id = :id_comment";
-                        $requete = Database::getInstance()->getPDO()->prepare($sql);
+                        $requete = Database::getInstance()->prepare($sql);
                         $requete->execute(array("text_comment" => $text_comment, "date_comment" => 'modifié le ' . date("d-m-y"), "id_comment" => $id_comment));
                     }
                 }

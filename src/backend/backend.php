@@ -25,7 +25,7 @@ class backendController
                         LEFT JOIN user u ON u.id = a.id_user
                         WHERE u.id=:id_user" ;
         
-        $requete = Database::getInstance()->getPDO()->prepare($sql_query);
+        $requete = Database::getInstance()->prepare($sql_query);
         $requete->execute(array("id_user"=>$_SESSION['id'])) ;
         $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
         include_once '../views/backend/backend_redigerView.php';

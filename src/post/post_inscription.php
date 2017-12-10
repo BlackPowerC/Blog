@@ -20,7 +20,7 @@ if (isset($_POST['passe']) AND isset($_POST['pseudo']) AND isset($_POST['sexe'])
     $sql_statement = "INSERT INTO user VALUES(NULL, 1, :pseudo, :passe, :age, :sexe, :pays)";
     $param = array("pseudo" => $user->getPseudo(), "passe" => $user->getPasse(), "sexe" => $user->getSexe()
         , "age" => $user->getAge(), "pays" => $user->getPays());
-    $request = Database::getInstance()->getPDO()->prepare($sql_statement);
+    $request = Database::getInstance()->prepare($sql_statement);
     $request->execute($param);
     $request->closeCursor();
 
