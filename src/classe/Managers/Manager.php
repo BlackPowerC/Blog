@@ -16,6 +16,8 @@ require_once '../Entity.php';
 
 abstract class Manager
 {
+    public function insert(Entity $a) ;
+    
     public function findAll() ;
     
     public function findById(int $id) ;
