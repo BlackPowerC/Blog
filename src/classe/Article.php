@@ -2,21 +2,17 @@
 
 require_once 'Entity.php';
 require_once 'Tag.php';
+require_once 'Comment.php';
 
 class Article extends Entity
 {
-    private $id_user ;
+    private $user;
     private $titre;
     private $date;
     private $text;
 
-    public function __construct(array $_array)
-    {
-        foreach ($_array as $key => $value)
-        {
-            $this->$key = $value;
-        }
-    }
+    public function __construct()
+    {}
 
     public function getId()
     {
@@ -26,16 +22,18 @@ class Article extends Entity
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
-    public function getId_user()
+    public function getUser()
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setId_user($id_user)
+    public function setUser($id_user)
     {
-        $this->id_user = $id_user;
+        $this->user = $id_user;
+        return $this;
     }
 
     public function getTitre()
@@ -46,6 +44,7 @@ class Article extends Entity
     public function setTitre($titre)
     {
         $this->titre = $titre;
+        return $this;
     }
 
     public function getDate()
@@ -56,6 +55,7 @@ class Article extends Entity
     public function setDate($date)
     {
         $this->date = $date;
+        return $this;
     }
 
     public function getText()
@@ -66,16 +66,6 @@ class Article extends Entity
     public function setText($text)
     {
         $this->text = $text;
+        return $this;
     }
-    
-    public function toHTML()
-    {
-        $HTMLView = array(
-            "titre" => '<h2 class="title_article">' . $this->titre . '</h2>',
-            "date" => '<span class="date_article"><i class="fa fa-calendar"></i> ' . $this->date . '</span><br>',
-            "text" => $this->text
-        );
-        return $HTMLView;
-    }
-
 }

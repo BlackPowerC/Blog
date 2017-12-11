@@ -37,31 +37,39 @@ class ArticleManager extends Manager
 
     public function insert(Article $a)
     {
-        
+        $sql_query = "INSERT INTO ARTICLE VALUES (NULL, :id_user, :titre, :date, :text)" ;
+        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps->execute(array(
+            "id_user"=>$a->getUser()->getId(),
+            "titre"=>$a->getTitre(),
+            "date"=>$a->getDate(),
+            "text"=>$a->getText()
+                )) ;
+        $ps->closeCursor() ;
     }
     
     public function findAll()
     {
-        
+        $sql_query = "" ;
     }
     
     public function findById(int $id)
     {
-        
+        $sql_query = "" ;
     }
     
     public function findByCriteria(string $criteria)
     {
-        
+        $sql_query = "" ;
     }
 
     public function update(Article $a)
     {
-        
+        $sql_query = "" ;
     }
         
     public function delete(int $id)
     {
-        
+        $sql_query = "" ;
     }
 }
