@@ -50,26 +50,77 @@ class ArticleManager extends Manager
     
     public function findAll()
     {
-        $sql_query = "" ;
+        $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
+                        FROM article a
+                        LEFT JOIN user u on a.id_user = u.id  " ;
+        $select = Database::getInstance()->getPDO()->executeQuery($sql_query) ;
+        $array = $select->fetchAll(PDO::FETCH_ASSOC) ;
+        $articles = array() ;
+        foreach ($array as $value)
+        {
+            $a = new Article();
+            array_push($articles, $a
+                    ->setDate($value['date'])->setId($value['id'])
+                    ->setText($value['text'])->setTitre($value['titre'])
+                    ->setUser($value['id_user'])) ;
+        }
+        return $articles ;
     }
     
     public function findById(int $id)
     {
-        $sql_query = "" ;
+        $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
+                        FROM article a
+                        LEFT JOIN user u on a.id_user = u.id  
+                            WHERE a.id=:id" ;
+        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps->execute(array("id"=>$id)) ;
+        $article = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $ps->closeCursor() ;
+        $a = new Article();
+        $a->setDate($article['date'])
+                ->setId($article['id'])
+                ->setText($article['text'])
+                ->setTitre($article['titre'])
+                ->setUser($article['id_user']);
+        return $a ;
     }
     
     public function findByCriteria(string $criteria)
     {
-        $sql_query = "" ;
+        $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
+                        FROM article a
+                        LEFT JOIN user u on a.id_user = u.id  
+                            WHERE a.text LIKE '%:criteria%' " ;
+        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps->execute(array("criteria"=>$criteria)) ;
+        $article = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $ps->closeCursor() ;
+        $a = new Article();
+        $a->setDate($article['date'])
+                ->setId($article['id'])
+                ->setText($article['text'])
+                ->setTitre($article['titre'])
+                ->setUser($article['id_user']);
+        return $a ;
     }
 
     public function update(Article $a)
     {
-        $sql_query = "" ;
+        $sql_query = "UPDATE article set titre=:titre, text=:text, date=:date WHERE id=:id" ;
+        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps->execute(array("titre"=>$a->getTitre(),
+            "text"=>$a->getText(),
+            "date"=>$a->getDate(),
+            "id"=>$a->getId())) ;
+        $ps->closeCursor() ;
     }
         
     public function delete(int $id)
     {
-        $sql_query = "" ;
+        $sql_query = "DELETE FROM article WHERE id=:id" ;
+        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps->execute(array("id"=>$id)) ;
+        $ps->closeCursor() ;
     }
 }
