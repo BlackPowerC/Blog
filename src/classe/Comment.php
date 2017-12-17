@@ -9,24 +9,8 @@ class Comment extends Entity
     private $date;
     private $text;
 
-    public function __construct(array $_array)
+    public function __construct()
     {
-        foreach ($_array as $key => $value)
-        {
-            $this->$key = $value ;
-        }
-    }
-
-    public function toHTML()
-    {
-        // le nom de l'auteur dans un span
-        // le texte dans un div
-        // le date dans un span
-        $HTMLView = array(
-            'date' => '<span class="date_comment"><i class="fa fa-calendar"></i> ' . $this->date . '</span>',
-            'text' => '<div class="text_comment">' . $this->text. '</div>'
-                );
-        return $HTMLView;
     }
 
     function getId_article()
@@ -37,6 +21,7 @@ class Comment extends Entity
     function setId_article($id_article)
     {
         $this->id_article = $id_article;
+        return $this;
     }
 
     public function getId_user()
@@ -47,6 +32,7 @@ class Comment extends Entity
     public function setId_user($id_user)
     {
         $this->id_user = $id_user;
+        return $this;
     }
 
     public function getDate()
@@ -68,5 +54,6 @@ class Comment extends Entity
     public function setText($text)
     {
         $this->text = $text;
+        return $this;
     }
 }
