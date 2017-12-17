@@ -16,12 +16,8 @@ class Tag
     protected $id_article ;
     protected $tag  ;
     
-    public function __construct(array $_array)
+    public function __construct()
     {
-        foreach($_array as $key => $value)
-        {
-            $this->tag = $value ;
-        }
     }
     
     function getId_article()
@@ -42,5 +38,6 @@ class Tag
     function setTag($tag)
     {
         $this->tag = $tag;
+        return $this;
     }
 }
