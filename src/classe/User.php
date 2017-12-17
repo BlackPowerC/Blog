@@ -11,12 +11,8 @@ class User
     private $sexe;
     private $pays;
 
-    public function __construct(array $_array)
+    public function __construct()
     {
-        foreach ($_array as $key => $value)
-        {
-            $this->$key = $value ;
-        }
     }
 
     public function getId_type()
