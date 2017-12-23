@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <?php
-    Page::getHead($t_article->getTitre());
+    Page::getHead($article->getTitre());
     ?>
     <body>
         <header>
@@ -18,23 +18,22 @@
                     <div class="article_content">
                         <!-- Zone de l'article -->
                         <div class="article_header_content">
-                            <?php echo $HTMLView['titre'] ?>
-                            <?php echo $HTMLView['date'] ?>
+                            <?php echo $article->getTitre(); ?>
+                            <?php echo $article->getDate(); ?>
                         </div>
                         <!-- end article_header_content -->
 
                         <div class="article_text_content">
                             <?php
-                            echo html_entity_decode($HTMLView['text']);
+                            echo html_entity_decode($article->getText());
                             ?>
                             <div class="container container-fluid">
                                 Etiquettes:  
                                 <?php
-                                foreach ($response_tags as $tag)
+                                foreach ($tags as $tag)
                                 {
-                                    $tg = new Tag($tag);
                                     ?>
-                                    <a href="index.php?tag=<?php echo $tg->getTag(); ?>" class="well well-sm"><?php echo $tg->getTag(); ?></a>
+                                    <a href="index.php?tag=<?php echo $tag->getTag(); ?>" class="well well-sm"><?php echo $tag->getTag(); ?></a>
                                     <?php
                                 }
                                 ?>
@@ -68,13 +67,13 @@
                             <div class="vote_btns">
                                 <!-- Like -->
                                 <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                                    <button type="submit" class="vote_btn like"><i class="fa fa-thumbs-up"> <?php echo $vote_results["count"]["like"]?></i></button>
+                                    <button type="submit" class="vote_btn like"><i class="fa fa-thumbs-up"> <?php echo $vote_results["count"]["like"] ?></i></button>
                                     <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
                                     <input hidden="" type="number" name="vote" value="1"/>
                                 </form>
                                 <!-- dislike -->
                                 <form style="display: inline-block;" action="../post/post_vote.php?uri=<?php echo $_SERVER["REQUEST_URI"] ?>" method="POST">
-                                    <button type="submit" class="vote_btn dislike"><i class="fa fa-thumbs-down"> <?php echo $vote_results["count"]["dislike"]?></i></button>
+                                    <button type="submit" class="vote_btn dislike"><i class="fa fa-thumbs-down"> <?php echo $vote_results["count"]["dislike"] ?></i></button>
                                     <input hidden="" type="number" name="id_article" value="<?php echo $_GET['id_article'] ?>" />
                                     <input hidden="" type="number" name="vote" value="0"/>
                                 </form>
@@ -86,29 +85,27 @@
                             <?php
                             foreach ($comments as $cmt)
                             {
-                                $comment = new Comment($cmt);
-                                $HTMLViewComment = $comment->toHTML();
                                 ?>
                                 <!-- Zone des commentaires -->
                                 <div class="container-fluid">
                                     <!-- Entete commentaire -->
                                     <div class="comment_header">
                                         <?php
-                                        echo $cmt['pseudo'];
-                                        echo $HTMLViewComment['date'];
+                                        echo $cmt->getId_user()->getPseudo();
+                                        echo $cmt->getDate();
                                         ?>
                                     </div>
                                     <!-- end comment_header -->
                                     <?php
                                     // Affichage du commenraire
-                                    echo $HTMLViewComment['text'];
+                                    echo $cmt->getText();
                                     if (isset($_SESSION['token']))
                                     {
                                         ?>
                                         <!-- Lien de réponse -->
                                         <button class="btn btn-primary" onclick="reply();">Répondre</button>
                                         <?php
-                                        if ($comment->getId_user() == $_SESSION['id'])
+                                        if ($cmt->getId_user()->getId() == $_SESSION['id'])
                                         {
                                             ?>	
                                             <div class="editlink_content">
@@ -116,8 +113,8 @@
                                                 <form action="" method="POST">
                                                     <button type="submit"><i class="fa fa-pencil-square-o" title="modifier"></i></button>
                                                     <!-- Les champs cachés -->
-                                                    <input hidden="" name="id_comment" value="<?php echo $comment->getId(); ?>" >
-                                                    <input hidden="" name="text_comment" value="<?php echo $comment->getText(); ?>"/>
+                                                    <input hidden="" name="id_comment" value="<?php echo $cmt->getId(); ?>" >
+                                                    <input hidden="" name="text_comment" value="<?php echo $cmt->getText(); ?>"/>
                                                     <input hidden="" name="operation" value="modify"> 
                                                 </form>
                                                 <!-- suppression -->
@@ -125,7 +122,7 @@
                                                     <button type="submit"><i class="fa fa-eraser" title="effacer"></i></button>
                                                     <!-- Les champs cachés -->
                                                     <input hidden="" type="text" name="uri" value="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-                                                    <input hidden="" name="id_comment" value="<?php echo $comment->getId(); ?>" >
+                                                    <input hidden="" name="id_comment" value="<?php echo $cmt->getId(); ?>" >
                                                     <input hidden="" name="operation" value="delete"> 
                                                 </form>
                                             </div>
@@ -156,15 +153,15 @@
                                         <input class="btn btn-primary" type="reset"/>
                                     </div>
                                     <!-- end form_control_content -->
-                                    <input hidden="" type="number" name="id_article" value="<?php echo $t_article->getId(); ?>" >
+                                    <input hidden="" type="number" name="id_article" value="<?php echo $article->getId(); ?>" >
                                     <input hidden="" type="text" name="uri" value="<?php echo $_SERVER["REQUEST_URI"]; ?>">
                                     <input id="operation" hidden="" type="text" name="operation" value="<?php
-                                           if (isset($_POST["operation"]))
-                                           {
-                                               echo $_POST["operation"];
-                                           } else
-                                               echo 'insert';
-                                           ?>"/>
+                                if (isset($_POST["operation"]))
+                                {
+                                    echo $_POST["operation"];
+                                } else
+                                    echo 'insert';
+                                ?>"/>
                                            <?php
                                            if (isset($_POST['id_comment']))
                                            {
