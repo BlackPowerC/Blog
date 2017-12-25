@@ -34,31 +34,84 @@ class TagManager extends Manager
 
     public function insert(Tag $a)
     {
-        
+        $sql = "INSERT INTO tag VALUES (:id_article, :tag)" ;
+        $ps = Database::getInstance()->prepare($sql) ;
+        return $ps->execute([
+            "id_article"=>$a->getId_article(),
+            "tag"=> strtolower($a->getTag())
+            ]) ;
     }
 
     public function findAll()
     {
-        
+        $sql = "SELECT * FROM tag" ;
+        $ps = Database::getInstance()->getPDO()->query($sql) ;
+        $tag_array = array() ;
+        $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $tag = new Tag() ;
+        foreach ($results as $value)
+        {
+            $tag->setId_article($value["id_article"]) ;
+            $tag->setTag($value["tag"]) ;
+            array_push($tag_array, $tag) ;
+        }
+        return $tag_array;
     }
 
     public function findById(int $id)
     {
-        
+        $sql = "SELECT * FROM tag WHERE id_article=:id" ;
+        $ps = Database::getInstance()->prepare($sql) ;
+        if(!$ps->execute(["id_article"=>$id]))
+        {
+            return array() ;
+        }
+        $tag_array = array() ;
+        $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $tag = new Tag() ;
+        foreach ($results as $value)
+        {
+            $tag->setId_article($value["id_article"]) ;
+            $tag->setTag($value["tag"]) ;
+            array_push($tag_array, $tag) ;
+        }
+        return $tag_array;
     }
 
     public function findByCriteria(string $criteria)
     {
-        
+        $sql = "SELECT * FROM tag WHERE tag=:criteria" ;
+        $ps = Database::getInstance()->prepare($sql) ;
+        if(!$ps->execute(["criteria"=>$criteria]))
+        {
+            return array() ;
+        }
+        $tag_array = array() ;
+        $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $tag = new Tag() ;
+        foreach ($results as $value)
+        {
+            $tag->setId_article($value["id_article"]) ;
+            $tag->setTag($value["tag"]) ;
+            array_push($tag_array, $tag) ;
+        }
+        return $tag_array;
     }
 
     public function update(Tag $a)
     {
-        
+        $sql = "UPDATE tag set tag=:tag WHERE id_article=:id_article" ;
+        $ps = Database::getInstance()->prepare($sql) ;
+        return $ps->execute([
+            "id_article"=>$a->getId_article(),
+            "tag"=>$a->getTag()
+        ]);
     }
 
     public function delete(int $id)
     {
-        
+        $sql = "DELETE FROM tag WHERE id=:id" ;
+        $ps = Database::getInstance()->prepare($sql) ;
+        return $ps->execute(array("id"=>$id)) ;
     }
 }
