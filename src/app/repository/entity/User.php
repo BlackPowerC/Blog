@@ -2,27 +2,13 @@
 
 require_once 'Entity.php';
 
-class User
+class User extends Entity
 {
-    private $id_type ;
-    private $pseudo;
-    private $passe;
-    private $age;
-    private $sexe;
-    private $pays;
+    private $pseudo ;
+    private $email ;
 
     public function __construct()
     {
-    }
-
-    public function getId_type()
-    {
-        return $this->id_type;
-    }
-
-    public function setId_type($id_type)
-    {
-        $this->id_type = $id_type;
     }
 
     public function getPseudo()
@@ -33,45 +19,17 @@ class User
     public function setPseudo($pseudo)
     {
         $this->pseudo = $pseudo;
+        return $this;
     }
-
-    public function getPasse()
-    {
-        return $this->passe;
-    }
-
-    public function setPasse($passe)
-    {
-        $this->passe = $passe;
-    }
-
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    public function setAge($age)
-    {
-        $this->age = $age;
-    }
-
-    public function getSexe()
-    {
-        return $this->sexe;
-    }
-
-    public function setSexe($sexe)
-    {
-        $this->sexe = $sexe;
-    }
-
-    public function getPays()
+    
+    public function getEmail()
     {
         return $this->pays;
     }
 
-    public function setPays($pays)
+    public function setEmail($email)
     {
-        $this->pays = $pays;
+        $this->email = $email;
+        return $this;
     }
 }
