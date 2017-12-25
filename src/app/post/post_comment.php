@@ -2,6 +2,7 @@
 
 session_start();
 require '../classe/Database.php';
+require_once '../repository/entity/Comment.php';
 
 if (isset($_SESSION["token"]))
 {
@@ -17,20 +18,18 @@ if (isset($_SESSION["token"]))
                         $comment = strip_tags($_POST["comment"]);
                         $id_article = strip_tags($_POST["id_article"]);
                         $id_user = strip_tags($_SESSION["id"]);
-
-                        $sql = "INSERT INTO comment values (NULL, :id_user, :id_article, :date, :comment)";
-                        $requete = Database::getInstance()->prepare($sql);
-                        $requete->execute(array("id_article" => $id_article, "id_user" => $id_user, "date" => date("d-m-y"), "comment" => $comment));
+                        $cmt = new Comment() ;
+                        $cm->setId_user($id_user)
+                                ->setId_article($id_article)
+                                ->setDate(date("d-m-y"))
+                                ->setText($comment) ;
+                        CommentManager::getInstance()->insert($cm) ;
                     }
                 }
                 break;
             case 'delete':
                 $id_comment = strip_tags($_POST['id_comment']);
-                $sql = "DELETE FROM comment WHERE id = ?";
-                $requete = Database::getInstance()->prepare($sql);
-                $requete->execute(array($id_comment));
-                $requete->closeCursor();
-                break;
+                CommentManager::getInstance()->delete($id_comment) ;
             case 'modify':
                 if (isset($_POST["comment"]) AND isset($_POST["id_article"]))
                 {
@@ -38,9 +37,9 @@ if (isset($_SESSION["token"]))
                     {
                         $id_comment = strip_tags($_POST['id_comment']);
                         $text_comment = strip_tags($_POST['comment']);
-                        $sql = "UPDATE comment SET text = :text_comment, date = :date_comment WHERE id = :id_comment";
-                        $requete = Database::getInstance()->prepare($sql);
-                        $requete->execute(array("text_comment" => $text_comment, "date_comment" => 'modifié le ' . date("d-m-y"), "id_comment" => $id_comment));
+                        $cm = new Comment() ;
+                        $cm->setId($id_comment)->setText($text_comment) ;
+                        CommentManager::getInstance()->update($cm) ;
                     }
                 }
                 break;
