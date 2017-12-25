@@ -14,9 +14,9 @@
  * @brief La classe ArticleManager sert à la gestion (Ajout, modification, suppression et select) d'entités Articles
  *          Cette classe est la voie royale pour manipuler les entités Articles
  */
-require_once '../Article.php' ;
-require_once '../Database.php' ;
-require_once '../Manager.php' ;
+require_once '../entity/Article.php' ;
+require_once '../../classe/Database.php' ;
+require_once 'Manager.php' ;
 
 class ArticleManager extends Manager
 {
@@ -37,9 +37,10 @@ class ArticleManager extends Manager
 
     public function insert(Article $a)
     {
-        $sql_query = "INSERT INTO ARTICLE VALUES (NULL, :id_user, :titre, :date, :text)" ;
+        $sql_query = "INSERT INTO ARTICLE VALUES (:id, :id_user, :titre, :date, :text)" ;
         $ps = Database::getInstance()->prepare($sql_query) ;
         $ps->execute(array(
+            "id"=>$a->getId(),
             "id_user"=>$a->getUser()->getId(),
             "titre"=>$a->getTitre(),
             "date"=>$a->getDate(),
@@ -75,7 +76,7 @@ class ArticleManager extends Manager
                             WHERE a.id=:id" ;
         $ps = Database::getInstance()->prepare($sql_query) ;
         $ps->execute(array("id"=>$id)) ;
-        $article = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        $article = $ps->fetch(PDO::FETCH_ASSOC) ;
         $ps->closeCursor() ;
         $a = new Article();
         $a->setDate($article['date'])
