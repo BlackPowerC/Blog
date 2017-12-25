@@ -2,8 +2,8 @@
 
 session_start();
 
-//require_once '../classe/Managers/ArticleManager.php';
-require_once '../classe/Article.php';
+require_once '../repository/manager/ArticleManager.php';
+require_once '../repository/entity/Article.php';
 require_once '../classe/Database.php';
 
 if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
@@ -13,6 +13,7 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
         switch (strip_tags($_POST['operation']))
         {
             case 'modify':
+                /* Les données de l'article */
                 $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
                 $titre = strip_tags($_POST['titre']);
@@ -39,35 +40,33 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
                 $insert_tags->closeCursor();
                 break;
             case 'insert':
-                /* Insertion de l'article */
+                /* Les données de l'article */
                 $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
                 $titre = strip_tags($_POST['titre']);
                 $date = date("d F Y");
+                /* Les tags */
                 $tags = explode(",", strip_tags(trim($_POST['tags'])));
-                $insert_article = Database::getInstance()->prepare("INSERT INTO article VALUES (:id, :id_user, :titre, :date, :text)");
-                $insert_article->bindValue(":id", $id + 1, PDO::PARAM_INT);
-                $insert_article->bindValue(":id_user", (int) $_SESSION['id'], PDO::PARAM_INT);
-                $insert_article->bindValue(":titre", $titre, PDO::PARAM_STR);
-                $insert_article->bindValue(":date", $date, PDO::PARAM_STR);
-                $insert_article->bindValue(":text", $text, PDO::PARAM_STR);
-                $insert_article->execute();
-                $insert_article->closeCursor();
+                /*Insertion de l'article */
+                $article = new Article() ;
+                $article->setId($id+1)
+                        ->setDate(date("d-m-y"))
+                        ->setText($text)
+                        ->setTitre($titre)
+                        ->setUser($id) ;
+                ArticleManager::getInstance()->insert($article) ;
                 /* Insertion des tags */
-                $insert_tags = Database::getInstance()->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
-                $insert_tags->bindValue(":id_article", $id+1, PDO::PARAM_INT);
+                $tag = new Tag() ;
+                $tag->setId_article($id+1) ;
                 foreach ($tags as $tag)
                 {
-                    $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
-                    $insert_tags->execute() ;
+                    $tag->setTag(trim($tag)) ;
+                    TagManager::getInstance()->insert($tag) ;
                 }
-                $insert_tags->closeCursor();
                 break;
             case 'delete' :
                 $id = trim($_POST['id']);
-                $delete = Database::getInstance()->prepare("DELETE FROM article WHERE id = :id");
-                $delete->execute(array("id" => $id));
-                $delete->closeCursor();
+                ArticleManager::getInstance()->delete($id) ;
         }
         header("Location: ../backend/backend.php?link=rediger&msg=0");
         exit();
