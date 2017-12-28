@@ -3,7 +3,7 @@
 session_start();
 
 require_once '../classe/Database.php';
-require_once '../classe/Article.php';
+require_once '../repository/entity/Article.php';
 require_once '../classe/Pagination.php';
 require_once '../classe/Pages.php';
 
@@ -30,12 +30,12 @@ class indexController
     public function searchAction(int $pageNum, string $keyword)
     {
         $pages = new Pagination(5);
-        $pages->initPager("SELECT COUNT(article.id) as nItem 
-                                    FROM article 
-                                    WHERE article.titre LIKE '%{$keyword}%' OR article.texte LIKE '%{$keyword}%'") ;
+        $pages->initPager("SELECT COUNT(Article.id) as nItem 
+                                    FROM Article 
+                                    WHERE Article.titre LIKE '%{$keyword}%' OR Article.text LIKE '%{$keyword}%'") ;
         $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
-                            FROM article a 
-                            LEFT JOIN comment c ON a.id = c.id_article 
+                            FROM Article a 
+                            LEFT JOIN Comment c ON a.id = c.id_article 
                             WHERE a.titre LIKE '%{$keyword}%' OR a.text LIKE '%{$keyword}%' 
                             GROUP by a.id" ;
         $data = $pages->initContent($pageNum, $sqlStatement);
@@ -50,20 +50,20 @@ class indexController
 
         if($tag == "")
         {
-            $pages->initPager("SELECT COUNT(article.id) as n FROM article") ;
+            $pages->initPager("SELECT COUNT(Article.id) as n FROM Article") ;
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
-                                FROM article a
-                                    LEFT JOIN comment c ON a.id = c.id_article
+                                FROM Article a
+                                    LEFT JOIN Comment c ON a.id = c.id_article
                                     GROUP by a.id";
         }
         else
         {
-            $pages->initPager("SELECT COUNT(*) as n FROM tag t WHERE t.tag LIKE '{$tag}'") ;
+            $pages->initPager("SELECT COUNT(*) as n FROM Tag t WHERE t.tag LIKE '%{$tag}%'") ;
             $sqlStatement = "SELECT a.id, a.titre, a.date, a.text, COUNT(c.id_article) AS nbre_comment
-                                FROM article a
-                                LEFT JOIN comment c ON a.id = c.id_article
-                                RIGHT JOIN tag t ON a.id = t.id_article
-                                WHERE t.tag LIKE '{$tag}'
+                                FROM Article a
+                                LEFT JOIN Comment c ON a.id = c.id_article
+                                RIGHT JOIN Tag t ON a.id = t.id_article
+                                WHERE t.tag LIKE '%{$tag}%'
                                 GROUP by a.id";
         }
         $data = $pages->initContent($page, $sqlStatement);
