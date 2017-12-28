@@ -1,2 +1,2 @@
 <?php
-	header("Location: frontend/index.php") ;
+header("Location: src/app/frontend/");
