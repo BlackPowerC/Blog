@@ -30,6 +30,10 @@ class Pagination
         /* 'select COUNT(' . $column . ') AS nItem FROM ' . $table.' '.$where */
         $requete = Database::getInstance()->getInstance()->getPDO()->query($countRequest);
         $reponse = $requete->fetchAll(PDO::FETCH_NUM);
+        if($reponse === FALSE)
+        {
+            return ;
+        }
         $this->nItem = (integer) $reponse[0];
         var_dump($this->nItem) ;
         $this->nPage = (integer) ceil($this->nItem / $this->perPage);
@@ -96,7 +100,12 @@ class Pagination
         if ($currentPage >= 1 AND $currentPage <= $this->nPage)
         {
             $requete = Database::getInstance()->getInstance()->getPDO()->query($selectQuery . ' LIMIT ' . ($currentPage - 1) * $this->perPage . ', ' . $this->perPage);
+            //var_dump($requete) ;
             $this->contentArray = $requete->fetchAll(PDO::FETCH_ASSOC);
+            if($this->contentArray === FALSE)
+            {
+                return array();
+            }
             $requete->closeCursor();
             return $this->contentArray;
         }
