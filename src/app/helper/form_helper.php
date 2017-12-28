@@ -8,7 +8,7 @@
 
 function form($action="", $method=""):string
 {
-    return '<form method="'.$method.'" action="'.$action.'"/>' ;
+    return '<form method="'.$method.'" action="'.$action.'">' ;
 }
 
 function form_input(array $params = []): string
@@ -20,9 +20,9 @@ function form_input(array $params = []): string
     $form = '<input ';
     foreach ($params as $key => $value)
     {
-        $form.$key.'="'.$value.'" ' ;
+        $form.=$key.'="'.$value.'" ' ;
     }
-    $form.'/>' ;
+    $form.='/>' ;
     return $form;
 }
 
