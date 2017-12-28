@@ -20,7 +20,7 @@ class TagManager extends Manager
 
     private function __construct()
     {
-        
+        parent::__construct() ;
     }
 
     public static function getInstance()
@@ -42,12 +42,16 @@ class TagManager extends Manager
             ]) ;
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $sql = "SELECT * FROM Tag" ;
-        $ps = Database::getInstance()->getPDO()->query($sql) ;
+        $ps = $this->pdo->query($sql) ;
         $tag_array = array() ;
         $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        if($results === FALSE)
+        {
+            return [];
+        }
         $tag = new Tag() ;
         foreach ($results as $value)
         {
@@ -58,36 +62,34 @@ class TagManager extends Manager
         return $tag_array;
     }
 
-    public function findById(int $id)
+    public function findById(int $id): Tag
     {
         $sql = "SELECT * FROM Tag WHERE id_article=:id" ;
         $ps = Database::getInstance()->prepare($sql) ;
-        if(!$ps->execute(["id_article"=>$id]))
+        $ps->execute(["id"=>$id]);
+        $result = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        if($result === FALSE)
         {
-            return array() ;
+            return NULL;
         }
-        $tag_array = array() ;
-        $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
         $tag = new Tag() ;
-        foreach ($results as $value)
-        {
-            $tag->setId_article($value["id_article"]) ;
-            $tag->setTag($value["tag"]) ;
-            array_push($tag_array, $tag) ;
-        }
-        return $tag_array;
+        $tag->setId_article($result["id_article"]) ;
+        $tag->setTag($result["tag"]) ;
+        
+        return $tag;
     }
 
     public function findByCriteria(string $criteria)
     {
         $sql = "SELECT * FROM Tag WHERE tag=:criteria" ;
         $ps = Database::getInstance()->prepare($sql) ;
-        if(!$ps->execute(["criteria"=>$criteria]))
-        {
-            return array() ;
-        }
+        $ps->execute(["criteria"=>$criteria]);
         $tag_array = array() ;
         $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        if($results=== FALSE)
+        {
+            return [];
+        }
         $tag = new Tag() ;
         foreach ($results as $value)
         {
