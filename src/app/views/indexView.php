@@ -30,19 +30,22 @@
                     {
                         foreach ($data as $datas)
                         {
-                            $article = new Article($datas);
-                            $HTMLView = $article->toHTML();
+                            $article = new Article();
+                            $article->setDate($datas["date"])
+                                    ->setId($datas["id"])
+                                    ->setText($datas["text"])
+                                    ->setTitre($datas["titre"]) ;
                             ?>
                             <div class="card article_content">
                                 <div class="article_header_content">
                                     <?php
-                                    echo $HTMLView['titre'];
-                                    echo $HTMLView['date'];
+                                    echo $article->getTitre();
+                                    echo $article->getDate();
                                     ?>
                                 </div>
                                 <!-- end article_header_content -->
                                 <div class="article_text_content">
-                                    <?php echo strip_tags(html_entity_decode(substr($HTMLView['text'], 0, 300))) . '<br/>'; ?>
+                                    <?php echo strip_tags(html_entity_decode(substr($article->getText(), 0, 300))) . '<br/>'; ?>
                                     <div style="margin-top: 10px">
                                         <a href="read_more.php?id_article=<?php echo $article->getId() ?>">Lire la suite --></a>
                                         <span style="float: right"> Commentaire <i class="badge"><?php echo $datas['nbre_comment']; ?></i></span>
