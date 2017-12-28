@@ -34,7 +34,7 @@ class TagManager extends Manager
 
     public function insert(Tag $a)
     {
-        $sql = "INSERT INTO tag VALUES (:id_article, :tag)" ;
+        $sql = "INSERT INTO Tag VALUES (:id_article, :tag)" ;
         $ps = Database::getInstance()->prepare($sql) ;
         return $ps->execute([
             "id_article"=>$a->getId_article(),
@@ -44,7 +44,7 @@ class TagManager extends Manager
 
     public function findAll()
     {
-        $sql = "SELECT * FROM tag" ;
+        $sql = "SELECT * FROM Tag" ;
         $ps = Database::getInstance()->getPDO()->query($sql) ;
         $tag_array = array() ;
         $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
@@ -60,7 +60,7 @@ class TagManager extends Manager
 
     public function findById(int $id)
     {
-        $sql = "SELECT * FROM tag WHERE id_article=:id" ;
+        $sql = "SELECT * FROM Tag WHERE id_article=:id" ;
         $ps = Database::getInstance()->prepare($sql) ;
         if(!$ps->execute(["id_article"=>$id]))
         {
@@ -80,7 +80,7 @@ class TagManager extends Manager
 
     public function findByCriteria(string $criteria)
     {
-        $sql = "SELECT * FROM tag WHERE tag=:criteria" ;
+        $sql = "SELECT * FROM Tag WHERE tag=:criteria" ;
         $ps = Database::getInstance()->prepare($sql) ;
         if(!$ps->execute(["criteria"=>$criteria]))
         {
@@ -100,7 +100,7 @@ class TagManager extends Manager
 
     public function update(Tag $a)
     {
-        $sql = "UPDATE tag set tag=:tag WHERE id_article=:id_article" ;
+        $sql = "UPDATE Tag set tag=:tag WHERE id_article=:id_article" ;
         $ps = Database::getInstance()->prepare($sql) ;
         return $ps->execute([
             "id_article"=>$a->getId_article(),
@@ -110,7 +110,7 @@ class TagManager extends Manager
 
     public function delete(int $id)
     {
-        $sql = "DELETE FROM tag WHERE id=:id" ;
+        $sql = "DELETE FROM Tag WHERE id=:id" ;
         $ps = Database::getInstance()->prepare($sql) ;
         return $ps->execute(array("id"=>$id)) ;
     }
