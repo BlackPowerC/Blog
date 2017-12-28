@@ -44,3 +44,16 @@ function unset_session_data(array $params): nool
     }
     return TRUE;
 }
+
+function set_cookies(int $expire): bool
+{
+    if(!isset($_SESSION))
+    {
+        return FALSE;
+    }
+    
+    foreach ($_SESSION as $key => $value)
+    {
+        setcookie($key, $value, $expire, NULL, NULL, TRUE, FALSE);
+    }
+}
