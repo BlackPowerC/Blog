@@ -24,6 +24,7 @@ class ArticleManager extends Manager
 
     private function __construct()
     {
+        parent::__construct() ;
     }
 
     public static function getInstance()
@@ -38,24 +39,28 @@ class ArticleManager extends Manager
     public function insert(Article $a)
     {
         $sql_query = "INSERT INTO ARTICLE VALUES (:id, :id_user, :titre, :date, :text)" ;
-        $ps = Database::getInstance()->prepare($sql_query) ;
-        $ps->execute(array(
+        $ps = $this->pdo->prepare($sql_query) ;
+        $ps->execute([
             "id"=>$a->getId(),
             "id_user"=>$a->getUser()->getId(),
             "titre"=>$a->getTitre(),
             "date"=>$a->getDate(),
             "text"=>$a->getText()
-                )) ;
+                ]) ;
         $ps->closeCursor() ;
     }
     
-    public function findAll()
+    public function findAll(): array
     {
         $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
                         FROM article a
                         LEFT JOIN user u on a.id_user = u.id  " ;
-        $select = Database::getInstance()->getPDO()->executeQuery($sql_query) ;
+        $select = $this->pdo->query($sql_query) ;
         $array = $select->fetchAll(PDO::FETCH_ASSOC) ;
+        if($array === FALSE)
+        {
+            return [];
+        }
         $articles = array() ;
         foreach ($array as $value)
         {
@@ -74,7 +79,7 @@ class ArticleManager extends Manager
                         FROM article a
                         LEFT JOIN user u on a.id_user = u.id  
                             WHERE a.id=:id" ;
-        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(array("id"=>$id)) ;
         $article = $ps->fetch(PDO::FETCH_ASSOC) ;
         $ps->closeCursor() ;
@@ -87,15 +92,19 @@ class ArticleManager extends Manager
         return $a ;
     }
     
-    public function findByCriteria(string $criteria)
+    public function findByCriteria(string $criteria): array
     {
         $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
                         FROM article a
                         LEFT JOIN user u on a.id_user = u.id  
                             WHERE a.text LIKE '%:criteria%' " ;
-        $ps = Database::getInstance()->prepare($sql_query) ;
-        $ps->execute(array("criteria"=>$criteria)) ;
+        $ps = $this->pdo->prepare($sql_query) ;
+        $ps->execute(["criteria"=>$criteria]) ;
         $article = $ps->fetchAll(PDO::FETCH_ASSOC) ;
+        if($article === FALSE)
+        {
+            return [];
+        }
         $ps->closeCursor() ;
         $a = new Article();
         $a->setDate($article['date'])
@@ -109,7 +118,7 @@ class ArticleManager extends Manager
     public function update(Article $a)
     {
         $sql_query = "UPDATE article set titre=:titre, text=:text, date=:date WHERE id=:id" ;
-        $ps = Database::getInstance()->prepare($sql_query) ;
+        $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(array("titre"=>$a->getTitre(),
             "text"=>$a->getText(),
             "date"=>$a->getDate(),
@@ -120,8 +129,8 @@ class ArticleManager extends Manager
     public function delete(int $id)
     {
         $sql_query = "DELETE FROM article WHERE id=:id" ;
-        $ps = Database::getInstance()->prepare($sql_query) ;
-        $ps->execute(array("id"=>$id)) ;
+        $ps = $this->pdo->prepare($sql_query) ;
+        $ps->execute(["id"=>$id]) ;
         $ps->closeCursor() ;
     }
 }
