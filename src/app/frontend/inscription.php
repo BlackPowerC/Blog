@@ -7,6 +7,7 @@ if (isset($_SESSION["token"]))
 }
 
 require_once '../classe/Pages.php';
+require_once '../helper/form_helper.php';
 ?>
 <html>
     <?php
@@ -46,67 +47,41 @@ require_once '../classe/Pages.php';
                 ?>
             </div>
             <div class="row">
-                <form action="../post/post_inscription.php" method="POST">
-                    <!-- Nom, prénom, pays, age -->
+                <?php echo form("../post/post_inscription.php", "POST") ?>
                     <fieldset>
-                        <legend>Civilité</legend>
-                        <!-- Nom -->
+                        <legend>Informations</legend>
+                        <!-- Pseudo -->
                         <div class="form-group">
-                            <label for="pseudo">Pseudo</label>
-                            <input class="form-control" type="text" name="pseudo" placeholder="Pseudo" required="required"/>
+                            <?php
+                            echo form_label("Pseudo", "pseudo") ;
+                            echo form_input([
+                                "type"=>"text",
+                                "class"=>"form-control",
+                                "placeholder"=>"Saisir pseudo",
+                                "name"=>"pseudo",
+                                "required"=>""
+                                ]);
+                            ?>
                         </div>
-                        <!-- Prénom -->
+                        <!-- Email -->
                         <div class="form-group">
-                            <label for="passe">Mot de passe</label>
-                            <input class="form-control" type="password" name="passe" placeholder="Mot de passe" required="required"/>
-                        </div>
-                        <!-- Age -->
-                        <div class="form-group">
-                            <label for="age">Age</label>
-                            <input class="form-control" type="number" name="age" placeholder="age" required="required"/>
-                        </div>
-                        <!-- Sexe -->
-                        <div class="form-group">
-                            <label for="sexe">Sexe</label>
-                            <label>Homme <input class="form-control checkbox" type="radio" name="sexe" value="H"/></label>
-                            <label>Femme <input class="form-control checkbox" type="radio" name="sexe" value="F"/></label>
-                        </div>
-                    </fieldset>
-                    <!-- Pays -->
-                    <fieldset>
-                        <legend>Nationalité</legend>
-                        <div class="form-group">
-                            <label for="pays">Pays</label>
-                            <select name="pays">
-                                <?php
-                                $europe = array("France", "Espagne", "Allemagne", "Pologne", "Russie", "Italie", "Danemark", "Finlande", "Roumanie", "Grèce");
-                                $afrique = array("Togo", "Bénin", "Libye", "Mali", "Tchad", "Congo", "Egypte", "Maroc", "Afrique du Sud", "Somalie");
-                                $amerique = array("USA", "Canada", "Bolivie", "Brésil", "Vénézuela", "Chilie", "Argentine", "Pérou", "Colombie", "Brésil");
-                                $asie = array("Irak", "Turquie", "Kazakhstan", "Chine", "Thaîlande", "Birmanie", "Ouzbékistan", "Cambodge", "Vietnam");
-                                $oceanie = array("Australie", "Papouasie Nouvelle-Guinnée", "Nouvelle Zélande", "Martinique", "Saint-Domingue");
-                                $pays = array("Europe" => $europe, "Afrique" => $afrique, "Amerique" => $amerique, "Asie" => $asie, "Oceanie" => $oceanie);
-                                foreach ($pays as $key => $value)
-                                {
-                                    ?>
-                                    <optgroup label="<?php echo $key; ?>">
-                                        <?php
-                                        foreach ($value as $lili)
-                                        {
-                                            ?>
-                                            <option value="<?php echo $lili ?>"><?php echo $lili ?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </optgroup>
-                                    <?php
-                                }
-                                ?>
-                            </select>
+                            <?php
+                            echo form_label("Email", "email") ;
+                            echo form_input([
+                                "type"=>"e-mail",
+                                "class"=>"form-control",
+                                "placeholder"=>"Saisir adresse électonique",
+                                "name"=>"email",
+                                "required"=>""
+                                ]);
+                            ?>
                         </div>
                     </fieldset>
                     <div class="form_control_content" style="width: 200px; margin: auto">
-                        <input class="btn btn-primary" type="submit"/>
-                        <input class="btn btn-primary" type="reset"/>
+                        <?php
+                        echo form_input(["type"=>"submit","class"=>"btn btn-primary"]);
+                        echo form_input(["type"=>"reset","class"=>"btn btn-primary"]);
+                        ?>
                     </div>
                 </form>
             </div>
