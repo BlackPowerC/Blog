@@ -4,10 +4,10 @@ session_start();
 
 require_once '../classe/MediaSharing.php';
 require_once '../classe/Database.php';
-require_once '../classe/Article.php';
-require_once '../classe/Comment.php';
+require_once '../repository/entity/Article.php';
+require_once '../repository/entity/Comment.php';
 require_once '../classe/Pages.php';
-require_once '../classe/Tag.php';
+require_once '../repository/entity/Tag.php';
 require_once '../classe/Vote.php';
 
 require_once '../repository/manager/ArticleManager.php';
