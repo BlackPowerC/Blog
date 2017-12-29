@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-require_once '../classe/Pages.php';
-require_once '../classe/User.php';
-require_once '../classe/Database.php';
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_class('pages') ;
+Autoloader::getInstance()->load_entity('user') ;
+Autoloader::getInstance()->load_class('database') ;
 
 class beuserController
 {

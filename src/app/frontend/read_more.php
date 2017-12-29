@@ -2,15 +2,15 @@
 
 session_start();
 
-require_once '../classe/MediaSharing.php';
-require_once '../classe/Database.php';
-require_once '../repository/entity/Article.php';
-require_once '../repository/entity/Comment.php';
-require_once '../classe/Pages.php';
-require_once '../repository/entity/Tag.php';
-require_once '../classe/Vote.php';
-
-require_once '../repository/manager/ArticleManager.php';
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_manager('articleManager') ;
+Autoloader::getInstance()->load_entity('comment') ;
+Autoloader::getInstance()->load_entity('tag') ;
+Autoloader::getInstance()->load_entity('article') ;
+Autoloader::getInstance()->load_class('database') ;
+Autoloader::getInstance()->load_class('pages') ;
+Autoloader::getInstance()->load_class('vote') ;
+Autoloader::getInstance()->load_class('mediaSharing') ;
 
 class readmoreController
 {
@@ -43,9 +43,6 @@ class readmoreController
         
         /* Récupération des tags */
         $tags = TagManager::getInstance()->findByid($id_article) ;
-        
-        /* L'article en question */
-        $HTMLView = $t_article->toHTML();
         
         /* Les résultats du vote */
         $vote_results = Vote::getVoteResults($id_article);
