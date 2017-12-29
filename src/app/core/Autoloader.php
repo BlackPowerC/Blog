@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'config.php';
+include_once 'config.php';
 /**
  * Autoloader pour charger automatiquement des classes ou des fichiers.
  *
@@ -13,6 +13,26 @@ require_once 'config.php';
  */
 class Autoloader
 {
+    /**
+     * Tableau devant contenir les noms des helpers sans l'extension.
+     * @var array 
+     */
+    private $helper = [] ;
+    /**
+     * Tableau devant contenir les noms des classes sans l'extension.
+     * @var array 
+     */
+    private $classe = [] ;
+    /**
+     * Tableau devant contenir les noms des entités sans l'extension.
+     * @var array 
+     */
+    private $entity = [] ;
+    /**
+     * Tableau devant contenir les noms des manager sans l'extension.
+     * @var array 
+     */
+    private $manager = [] ;
     /**
      * Variable static pour implémenter le pattern Singleton.
      * @var Autoloader 
@@ -24,29 +44,30 @@ class Autoloader
      */
     private function __construct()
     {
-        foreach ($helper as $hlp) {
+        foreach ($this->helper as $hlp) {
             if(file_exists(HELPER.$hlp.'php')) {
                 require_once HELPER.$hlp.'php';
             }
         }
         
-        foreach($entity as $hlp) {
+        foreach($this->entity as $hlp) {
             if(file_exists(ENTITY.ucfirst($hlp).'php')) {
                 require_once ENTITY.ucfirst($hlp).'php';
             }
         }
         
-        foreach ($class as $hlp) {
+        foreach ($this->classe as $hlp) {
             if(file_exists(CLASSE.ucfirst($hlp).'php')) {
                 require_once CLASSE.ucfirst($hlp).'php';
             }
         }
         
-        foreach($manager as $hlp) {
+        foreach($this->manager as $hlp) {
             if(file_exists(MANAGER.ucfirst($hlp).'php')) {
                 require_once MANAGER.ucfirst($hlp).'php';
             }
         }
+        $this->register();
     }
     
     /**
@@ -62,39 +83,39 @@ class Autoloader
         return self::$p_singleton;
     }
 
-    public static function load_helper(string $class)
+    public function load_helper(string $class)
     {
-        if(file_exists(HELPER.$class.'php')) {
-            require_once HELPER.$class.'php';
+        if(file_exists(HELPER.$class.'.php')) {
+            require_once HELPER.$class.'.php';
         }   
     }
     
-    public static function load_class(string $class)
+    public function load_class(string $class)
     {
-        if(file_exists(CLASSE.ucfirst($class).'php')) {
-            require_once CLASSE.ucfirst($class).'php';
+        if(file_exists(CLASSE.ucfirst($class).'.php')) {
+            require_once CLASSE.ucfirst($class).'.php';
         } 
     }
     
-    public static function load_entity(string $class)
+    public function load_entity(string $class)
     {
-        if(file_exists(ENTITY.ucfirst($class).'php')) {
-            require_once ENTITY.ucfirst($class).'php';
+        if(file_exists(ENTITY.ucfirst($class).'.php')) {
+            require_once ENTITY.ucfirst($class).'.php';
         }
     }
     
-    public static function load_manager(string $class)
+    public function load_manager(string $class)
     {
-        if(file_exists(MANAGER.ucfirst($class).'php')) {
-            require_once MANAGER.ucfirst($class).'php';
+        if(file_exists(MANAGER.ucfirst($class).'.php')) {
+            require_once MANAGER.ucfirst($class).'.php';
         }
     }
     
-    public static function register()
+    private function register()
     {
-        spl_autoload(["__CLASS__", "load_helper"]) ;
-        spl_autoload(["__CLASS__", "load_class"]) ;
-        spl_autoload(["__CLASS__", "load_entity"]) ;
-        spl_autoload(["__CLASS__", "load_manager"]) ;
+        spl_autoload_register([__CLASS__, "load_helper"]) ;
+        spl_autoload_register([__CLASS__, "load_class"]) ;
+        spl_autoload_register([__CLASS__, "load_entity"]) ;
+        spl_autoload_register([__CLASS__, "load_manager"]) ;
     }
 }
