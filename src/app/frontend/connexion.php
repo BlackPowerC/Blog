@@ -1,12 +1,14 @@
 <?php
 session_start();
-if (isset($_SESSION["token"])) {
+if (isset($_SESSION["id"]) &&isset($_SESSION["pseudo"]) && isset($_SESSION["email"]))
+{
     header("Location: index.php");
     exit();
 }
 
-require_once '../classe/Pages.php';
-require_once '../helper/form_helper.php';
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_helper('form_helper') ;
+Autoloader::getInstance()->load_class('pages') ;
 ?>
 <html>
     <?php
