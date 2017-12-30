@@ -24,7 +24,7 @@ class ArticleManager extends Manager
 {
     private static $p_singleton ;
 
-    private function __construct()
+    protected function __construct()
     {
         parent::__construct() ;
     }
@@ -38,8 +38,12 @@ class ArticleManager extends Manager
         return self::$p_singleton ;
     }
 
-    public function insert(Article $a)
+    public function insert(Entity $a)
     {
+        if(!($a instanceof Article))
+        {
+            return;
+        }
         $sql_query = "INSERT INTO ARTICLE VALUES (:id, :id_user, :titre, :date, :text)" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute([
@@ -75,7 +79,7 @@ class ArticleManager extends Manager
         return $articles ;
     }
     
-    public function findById(int $id)
+    public function findById(int $id): Article
     {
         $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
                         FROM article a
@@ -117,8 +121,12 @@ class ArticleManager extends Manager
         return $a ;
     }
 
-    public function update(Article $a)
+    public function update(Entity $a)
     {
+        if(!($a instanceof Article))
+        {
+            return FALSE;
+        }
         $sql_query = "UPDATE article set titre=:titre, text=:text, date=:date WHERE id=:id" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(array("titre"=>$a->getTitre(),

@@ -18,7 +18,7 @@ class TagManager extends Manager
 {
     private static $p_singleton;
 
-    private function __construct()
+    protected function __construct()
     {
         parent::__construct() ;
     }
@@ -32,8 +32,12 @@ class TagManager extends Manager
         return self::$p_singleton;
     }
 
-    public function insert(Tag $a)
+    public function insert(Entity $a)
     {
+        if(!($a instanceof Tag))
+        {
+            return;
+        }
         $sql = "INSERT INTO Tag VALUES (:id_article, :tag)" ;
         $ps = Database::getInstance()->prepare($sql) ;
         return $ps->execute([
@@ -100,8 +104,12 @@ class TagManager extends Manager
         return $tag_array;
     }
 
-    public function update(Tag $a)
+    public function update(Entity $a)
     {
+        if(!($a instanceof Tag))
+        {
+            return;
+        }
         $sql = "UPDATE Tag set tag=:tag WHERE id_article=:id_article" ;
         $ps = Database::getInstance()->prepare($sql) ;
         return $ps->execute([
