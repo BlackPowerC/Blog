@@ -11,31 +11,37 @@
  *
  * @author jordy
  */
-require_once '../../classe/Database.php';
-require_once 'Manager.php';
-require_once '../entity/Comment.php';
+require_once ROOT.'core/Autoloader.php';
+Autoloader::getInstance()->load_entity('comment') ;
+Autoloader::getInstance()->load_class('database') ;
+Autoloader::getInstance()->load_manager('manager') ;
 
 class CommentManager extends Manager
 {
     private static $p_singleton ;
 
-    private function __construct()
+    protected function __construct()
     {
+        parent::__construct() ;
     }
 
     public static function getInstance()
     {
         if(is_null(self::$p_singleton))
         {
-           self::$p_singleton = new ArticleManager() ;
+           self::$p_singleton = new CommentManager() ;
         }
         return self::$p_singleton ;
     }
     
-    public function insert(Comment $a)
+    public function insert(Entity $a)
     {
+        if(!($a instanceof Comment))
+        {
+            return;
+        }
         $sql = "INSERT INTO Comment VALUES (NULL, :id_user, :id_article, :date, :text)" ;
-        $ps = Database::getInstance()->prepare($sql) ;
+        $ps = $this->pdo->prepare($sql) ;
         return $ps->execute(
                 array(
                     "id_user"=>$a->getId_user(),
@@ -52,7 +58,7 @@ class CommentManager extends Manager
                     FROM Comment c RIGHT JOIN User u ON u.id = c.id_user";
         // La variable à renvoyer c'est un tableau de Comment
         $comment_array = array() ;
-        $query = Database::getInstance()->query($sql) ;
+        $query = $this->pdo->query($sql) ;
         // result est un tableau contenant des tableaux
         $results = $query->fetchAll(PDO::FETCH_ASSOC) ;
         $comment = new Comment() ;
@@ -79,7 +85,7 @@ class CommentManager extends Manager
                     WHERE c.id_carticle = :id_article";
         // La variable à renvoyer c'est un tableau de Comment
         $comment_array = array() ;
-        $ps = Database::getInstance()->prepare($sql) ;
+        $ps = $this->pdo->prepare($sql) ;
         $ps->execute(array("id_article"=>$id)) ;
         // result est un tableau contenant des tableaux
         $results = $ps->fetchAll(PDO::FETCH_ASSOC) ;
@@ -105,17 +111,21 @@ class CommentManager extends Manager
         return array() ;
     }
 
-    public function update(Comment $a)
+    public function update(Entity $a)
     {
+        if(!($a instanceof Comment))
+        {
+            return;
+        }
         $sql = "UPDATE Comment set text=:text WHERE id = :id" ;
-        $ps = Database::getInstance()->prepare($sql) ;
+        $ps = $this->pdo->prepare($sql) ;
         return $ps->execute(array("id"=>$a->getId(), "text"=>$a->getText())) ;
     }
         
     public function delete(int $id)
     {
         $sql = "DELETE FROM Comment WHERE id=:id" ;
-        $ps = Database::getInstance()->prepare($sql) ;
+        $ps = $this->pdo->prepare($sql) ;
         return $ps->execute(array("id"=>$id)) ;
     }
 }
