@@ -59,7 +59,7 @@
                         <div class="form-group input_content">
                             <!-- Zone de Rédaction -->
                             <label for="content">Rédiger</label><br/>
-                            <script src="http://localhost/js_text_editor/ckeditor/ckeditor.js"></script>
+                            <script src="../../../ressource/js/ckeditor/ckeditor.js"></script>
                             <textarea id="text" name="text" rows="" cols="" required="required">
                                 <?php
                                 if (isset($_POST['text']))
@@ -74,7 +74,7 @@
                                 echo (integer) strip_tags($_POST['id']);
                             } else
                             {
-                                echo (int) $articles[count($articles) - 1]['id'];
+                                echo (int) $articles[count($articles) - 1]->getId();
                             }
                             ?>">
                             <script type="text/javascript">CKEDITOR.replace('text');</script>
@@ -111,32 +111,31 @@
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($articles as $a)
+                        foreach ($articles as $article)
                         {
-                            $t_article = new Article($a);
                             ?>
                             <tr>
-                                <td><div style="width: 150px"><?php echo $t_article->getTitre(); ?></div></td>
+                                <td><div style="width: 150px"><?php echo $article->getTitre(); ?></div></td>
                                 <td><div style="width: 50px"><?php echo $_SESSION['pseudo'] ?></div></td>
-                                <td><div style="width: 150px"><?php echo $t_article->getDate(); ?></div></td>
+                                <td><div style="width: 150px"><?php echo $article->getDate(); ?></div></td>
                                 <td>
                                     <!-- Formulaire d'édition -->
                                     <div class="editlink_content border-0">
                                         <!-- Suppression -->
                                         <form action="../post/post_rediger.php" method="POST">
                                             <input class="btn btn-danger" type="submit" value="Supprimer"/>
-                                            <input type="number" hidden="" name="id" value="<?php echo $t_article->getId(); ?>"/>
+                                            <input type="number" hidden="" name="id" value="<?php echo $article->getId(); ?>"/>
                                             <input type="text" hidden="" name="operation" value="delete"/>
                                         </form>
                                         <!-- Modification -->
                                         <form action="" method="POST">
                                             <input class="btn btn-primary" type="submit" value="Modifier"/>
-                                            <input type="number" hidden="" name="id" value="<?php echo $t_article->getId(); ?>"/>
-                                            <input type="text" hidden="" name="text" value="<?php echo $t_article->getText(); ?>"/>
-                                            <input type="text" hidden="" name="titre" value="<?php echo $t_article->getTitre() ?>"/>
+                                            <input type="number" hidden="" name="id" value="<?php echo $article->getId(); ?>"/>
+                                            <input type="text" hidden="" name="text" value="<?php echo $article->getText(); ?>"/>
+                                            <input type="text" hidden="" name="titre" value="<?php echo $article->getTitre() ?>"/>
                                             <input type="text" hidden="" name="operation" value="modify"/>
                                         </form>
-                                        <a class="btn btn-info" target="_blank" href="../frontend/read_more.php?id_article=<?php echo $t_article->getId(); ?>" >Voir <i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a class="btn btn-info" target="_blank" href="../frontend/read_more.php?id_article=<?php echo $article->getId(); ?>" >Voir <i class="glyphicon glyphicon-eye-open"></i></a>
                                     </div>
                                 </td>
                             </tr>

@@ -44,11 +44,11 @@ class ArticleManager extends Manager
         {
             return;
         }
-        $sql_query = "INSERT INTO Article VALUES (:id, :id_user, :titre, :date, :text)" ;
+        $sql_query = "INSERT INTO Article VALUES (:id, :id_user, :titre, :text, :date)" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute([
             "id"=>$a->getId(),
-            "id_user"=>$a->getUser()->getId(),
+            "id_user"=>$a->getUser(),
             "titre"=>$a->getTitre(),
             "date"=>$a->getDate(),
             "text"=>$a->getText()
@@ -58,7 +58,7 @@ class ArticleManager extends Manager
     
     public function findAll(): array
     {
-        $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
+        $sql_query = "SELECT a.id, a.id_user, a.titre, a.date, a.text, u.pseudo 
                         FROM Article a
                         LEFT JOIN User u on a.id_user = u.id  " ;
         $select = $this->pdo->query($sql_query) ;

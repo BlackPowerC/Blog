@@ -2,11 +2,14 @@
 
 session_start();
 
-require_once '../repository/manager/ArticleManager.php';
-require_once '../repository/entity/Article.php';
-require_once '../classe/Database.php';
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_entity('article') ;
+Autoloader::getInstance()->load_entity('tag') ;
+Autoloader::getInstance()->load_manager('articleManager') ;
+Autoloader::getInstance()->load_manager('tagManager') ;
+Autoloader::getInstance()->load_class('database') ;
 
-if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
+if (isset($_SESSION['id']) AND $_SESSION['id'] == 1)
 {
     if (isset($_POST['operation']))
     {
@@ -17,51 +20,49 @@ if (isset($_SESSION['token']) AND $_SESSION['id_type'] == 2)
                 $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
                 $titre = strip_tags($_POST['titre']);
+                
+                $article = new Article() ;
+                $article->setId($id)->setText($text)->setTitre($titre)
+                        ->setDate(date("Y-m-d H:i:s")) ;
+               /* Modification de l'article */
+                ArticleManager::getInstance()->update($article);
                 $tags = explode(",", strip_tags($_POST['tags']));
-                /* Modification de l'article */
-                $update_article = Database::getInstance()->prepare("UPDATE article set text=:text, titre=:titre WHERE id=:id_article");
-                $update_article->bindValue(":text", $text, PDO::PARAM_STR);
-                $update_article->bindValue(":id_article", $id, PDO::PARAM_INT);
-                $update_article->bindValue(":titre", $titre, PDO::PARAM_STR);
-                $update_article->execute();
-                $update_article->closeCursor();
                 /* Modification des tags */
-                $delete_tags = Database::getInstance()->prepare("DELETE FROM tag WHERE id_article=:id_article");
-                $delete_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
-                $delete_tags->execute();
-                $delete_tags->closeCursor();
-                $insert_tags = Database::getInstance()->prepare("INSERT INTO tag VALUES (:id_article, :tag)");
-                $insert_tags->bindValue(":id_article", $id, PDO::PARAM_INT);
-                foreach ($tags as $tag)
+                TagManager::getInstance()->delete($id) ;
+                if(count($tags) > 0)
                 {
-                    $insert_tags->bindValue(":tag", trim($tag), PDO::PARAM_STR);
-                    $insert_tags->execute();
+                    $t = new Tag() ;
+                    $t->setId_article($id+1) ;
+                    foreach ($tags as $tag)
+                    {
+                        $t->setTag(trim($tag)) ;
+                        TagManager::getInstance()->insert($t) ;
+                    }
                 }
-                $insert_tags->closeCursor();
                 break;
             case 'insert':
                 /* Les données de l'article */
                 $id = (int) strip_tags($_POST['id']);
                 $text = htmlentities($_POST['text']);
                 $titre = strip_tags($_POST['titre']);
-                $date = date("d F Y");
-                /* Les tags */
-                $tags = explode(",", strip_tags(trim($_POST['tags'])));
                 /*Insertion de l'article */
                 $article = new Article() ;
-                $article->setId($id+1)
-                        ->setDate(date("d-m-y"))
-                        ->setText($text)
+                $article->setId($id+1)->setDate(date("Y-m-d H:i:s"))->setText($text)
                         ->setTitre($titre)
                         ->setUser($id) ;
                 ArticleManager::getInstance()->insert($article) ;
+                /* Les tags */
+                $tags = explode(",", strip_tags(trim($_POST['tags'])));
                 /* Insertion des tags */
-                $tag = new Tag() ;
-                $tag->setId_article($id+1) ;
-                foreach ($tags as $tag)
+                if(count($tags) > 0)
                 {
-                    $tag->setTag(trim($tag)) ;
-                    TagManager::getInstance()->insert($tag) ;
+                    $t = new Tag() ;
+                    $t->setId_article($id+1) ;
+                    foreach ($tags as $tag)
+                    {
+                        $t->setTag(trim($tag)) ;
+                        TagManager::getInstance()->insert($t) ;
+                    }
                 }
                 break;
             case 'delete' :
