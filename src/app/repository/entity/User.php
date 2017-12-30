@@ -24,7 +24,7 @@ class User extends Entity
     
     public function getEmail()
     {
-        return $this->pays;
+        return $this->email;
     }
 
     public function setEmail($email)

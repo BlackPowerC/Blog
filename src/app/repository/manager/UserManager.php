@@ -48,7 +48,7 @@ class UserManager extends Manager
         $ps->closeCursor() ;
     }
 
-    public function get(User $u): User
+    public function get(User $u)
     {
         $ps = $this->pdo->prepare("SELECT id FROM User WHERE pseudo=? AND email=?");
         $ps->execute([$u->getPseudo(), $u->getEmail()]);
