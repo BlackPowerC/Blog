@@ -44,7 +44,7 @@ class ArticleManager extends Manager
         {
             return;
         }
-        $sql_query = "INSERT INTO ARTICLE VALUES (:id, :id_user, :titre, :date, :text)" ;
+        $sql_query = "INSERT INTO Article VALUES (:id, :id_user, :titre, :date, :text)" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute([
             "id"=>$a->getId(),
@@ -59,8 +59,8 @@ class ArticleManager extends Manager
     public function findAll(): array
     {
         $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
-                        FROM article a
-                        LEFT JOIN user u on a.id_user = u.id  " ;
+                        FROM Article a
+                        LEFT JOIN User u on a.id_user = u.id  " ;
         $select = $this->pdo->query($sql_query) ;
         $array = $select->fetchAll(PDO::FETCH_ASSOC) ;
         if($array === FALSE)
@@ -81,9 +81,9 @@ class ArticleManager extends Manager
     
     public function findById(int $id): Article
     {
-        $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
-                        FROM article a
-                        LEFT JOIN user u on a.id_user = u.id  
+        $sql_query = "SELECT a.id, a.id_user, a.titre, a.date, a.text, u.pseudo 
+                        FROM Article a
+                        LEFT JOIN User u on a.id_user = u.id  
                             WHERE a.id=:id" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(array("id"=>$id)) ;
@@ -101,8 +101,8 @@ class ArticleManager extends Manager
     public function findByCriteria(string $criteria): array
     {
         $sql_query = "SELECT a.id, a.id_user, a.date, a.text, u.pseudo 
-                        FROM article a
-                        LEFT JOIN user u on a.id_user = u.id  
+                        FROM Article a
+                        LEFT JOIN User u on a.id_user = u.id  
                             WHERE a.text LIKE '%:criteria%' " ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(["criteria"=>$criteria]) ;
@@ -127,7 +127,7 @@ class ArticleManager extends Manager
         {
             return FALSE;
         }
-        $sql_query = "UPDATE article set titre=:titre, text=:text, date=:date WHERE id=:id" ;
+        $sql_query = "UPDATE Article set titre=:titre, text=:text, date=:date WHERE id=:id" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(array("titre"=>$a->getTitre(),
             "text"=>$a->getText(),
@@ -138,7 +138,7 @@ class ArticleManager extends Manager
         
     public function delete(int $id)
     {
-        $sql_query = "DELETE FROM article WHERE id=:id" ;
+        $sql_query = "DELETE FROM Article WHERE id=:id" ;
         $ps = $this->pdo->prepare($sql_query) ;
         $ps->execute(["id"=>$id]) ;
         $ps->closeCursor() ;
