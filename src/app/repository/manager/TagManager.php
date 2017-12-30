@@ -11,8 +11,9 @@
  *
  * @author jordy
  */
-require_once 'Manager.php';
-require_once '../entity/Tag.php';
+require_once ROOT.'core/Autoloader.php';
+Autoloader::getInstance()->load_entity('tag') ;
+Autoloader::getInstance()->load_manager('manager') ;
 
 class TagManager extends Manager
 {
@@ -27,7 +28,7 @@ class TagManager extends Manager
     {
         if (is_null(self::$p_singleton))
         {
-            self::$p_singleton = new ArticleManager();
+            self::$p_singleton = new TagManager();
         }
         return self::$p_singleton;
     }
@@ -66,21 +67,25 @@ class TagManager extends Manager
         return $tag_array;
     }
 
-    public function findById(int $id): Tag
+    public function findById(int $id): array
     {
         $sql = "SELECT * FROM Tag WHERE id_article=:id" ;
         $ps = Database::getInstance()->prepare($sql) ;
         $ps->execute(["id"=>$id]);
+        $tag_array = array() ;
         $result = $ps->fetchAll(PDO::FETCH_ASSOC) ;
         if($result === FALSE)
         {
-            return NULL;
+            return [];
         }
         $tag = new Tag() ;
-        $tag->setId_article($result["id_article"]) ;
-        $tag->setTag($result["tag"]) ;
-        
-        return $tag;
+        foreach ($result as $value)
+        {
+            $tag->setId_article($value["id_article"]) ;
+            $tag->setTag($value["tag"]) ;
+            array_push($tag_array, $tag) ;
+        }
+        return $tag_array;
     }
 
     public function findByCriteria(string $criteria)
