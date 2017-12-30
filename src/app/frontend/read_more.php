@@ -4,6 +4,8 @@ session_start();
 
 require_once '../core/Autoloader.php';
 Autoloader::getInstance()->load_manager('articleManager') ;
+Autoloader::getInstance()->load_manager('tagManager') ;
+Autoloader::getInstance()->load_manager('commentManager') ;
 Autoloader::getInstance()->load_entity('comment') ;
 Autoloader::getInstance()->load_entity('tag') ;
 Autoloader::getInstance()->load_entity('article') ;

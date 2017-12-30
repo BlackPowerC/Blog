@@ -14,9 +14,11 @@
  * @brief La classe ArticleManager sert à la gestion (Ajout, modification, suppression et select) d'entités Articles
  *          Cette classe est la voie royale pour manipuler les entités Articles
  */
-require_once '../entity/Article.php' ;
-require_once '../../classe/Database.php' ;
-require_once 'Manager.php' ;
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_entity('article') ;
+Autoloader::getInstance()->load_entity('entity') ;
+Autoloader::getInstance()->load_class('database') ;
+Autoloader::getInstance()->load_manager('manager') ;
 
 class ArticleManager extends Manager
 {
