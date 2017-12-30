@@ -11,9 +11,10 @@
  *
  * @author jordy
  */
-class Tag
+Autoloader::getInstance()->load_entity("entity") ;
+
+class Tag extends Entity
 {
-    protected $id_article ;
     protected $tag  ;
     
     public function __construct()
@@ -22,7 +23,7 @@ class Tag
     
     function getId_article()
     {
-        return $this->id_article;
+        return $this->id;
     }
 
     function getTag()
@@ -32,7 +33,8 @@ class Tag
 
     function setId_article($id_article)
     {
-        $this->id_article = $id_article;
+        $this->id = $id_article;
+        return $this;
     }
 
     function setTag($tag)
