@@ -37,8 +37,8 @@ class Page
         echo '<input class="form-control" name="pseudo" type="text" required="required"/>';
         echo '</div>';
         echo '<div class="form-group">';
-        echo '<label for="passe">Mot de passe</label>';
-        echo '<input class="form-control" name="passe" type="password" required="required"/>';
+        echo '<label for="email">Email</label>';
+        echo '<input class="form-control" name="email" type="email" required="required"/>';
         echo '</div>';
         echo '<div class="checkbox">';
         echo '<label for="remind"><input class="checkbox" name="remind" type="checkbox"/>Se souvenir de moi</label>';

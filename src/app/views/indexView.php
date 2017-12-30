@@ -10,7 +10,7 @@
             <div class="row">
                 <div class ="side_content col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <?php
-                    (isset($_SESSION['token'])) ? Page::getConnecteddiv($_SESSION['pseudo']) : Page::getLoginform();
+                    (isset($_SESSION['id'])) ? Page::getConnecteddiv($_SESSION['pseudo']) : Page::getLoginform();
                     ?>
                 </div>
                 <div class="main_content col-xs-8 col-sm-8 col-md-8 col-lg-8">
