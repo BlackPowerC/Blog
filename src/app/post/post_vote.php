@@ -8,7 +8,8 @@
 
 session_start();
 
-require_once '../classe/Vote.php';
+require_once '../core/Autoloader.php';;
+Autoloader::getInstance()->load_class('vote') ;
 
 if (isset($_SESSION["token"]))
 {
