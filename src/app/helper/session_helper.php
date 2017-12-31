@@ -29,13 +29,26 @@ function set_session_data(array $params): bool
     return TRUE;
 }
 
-function unset_session_data(array $params): nool
+function unset_session_data(array $params=[]): bool
 {
     if(!isset($_SESSION))
     {
         return FALSE;
     }
-    foreach ($params as $key => $value)
+    /* Destruction de certaines variables dans session */
+    if(count($params) > 0)
+    {
+        foreach ($params as $key => $value)
+        {
+            if(isset($_SESSION[$key]))
+            {
+                unset($_SESSION[$key]) ;
+            }
+        }
+        return TRUE;
+    }
+    /* Destruction de toutes les variables dans session */
+    foreach ($_SESSION as $key => $value)
     {
         if(isset($_SESSION[$key]))
         {
