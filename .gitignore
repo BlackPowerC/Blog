@@ -3,3 +3,6 @@
 /.buildpath
 /src/app/frontend/bb.jpg
 /.project
+/nbproject/private/
+/blog.sublime*
+/log.txt
