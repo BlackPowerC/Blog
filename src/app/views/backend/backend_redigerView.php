@@ -148,26 +148,4 @@
             </div>
         </div>
     </body>
-    <?php
-    if (isset($_GET['msg']))
-    {
-        $msg = (int) strip_tags($_GET['msg']);
-        switch ($msg)
-        {
-            case 1:
-                ?>
-                <script type="text/javascript">
-                    window.alert("Une erreur est survenue lors de l'action !");
-                </script>
-                <?php
-                break;
-            case 0:
-                ?>
-                <script type="text/javascript">
-                    window.alert("Action bien exécutée !");
-                </script>
-            <?php
-        }
-    }
-    ?>
 </html>
