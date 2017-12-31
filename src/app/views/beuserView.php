@@ -32,7 +32,7 @@
             <div class="row">
                 <!-- Colonne pour la pp -->
                 <div class="side_content col-lg-4 col-md-4 col-xs-4">
-                    <img class="img-thumbnail" alt="<?php echo $_SESSION['pseudo']; ?>" src="bb.jpg"/>
+                    <img class="img-thumbnail" alt="<?php echo $_SESSION['pseudo']; ?>" src="../../../ressource/img/600628_515012425217344_1213649186_n.jpg"/>
                 </div>
                 <div class="main_content col-lg-8 col-md-8 col-xs-8">
                     <h1 class="text-center">Informations personnelles</h1>
@@ -45,20 +45,38 @@
                         <li><a data-toggle="tab" href="#mod">Modifier</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="mod" class="tab-pan fade in active">
+                        <div id="info" class="tab-pan fade in active">
                             <ul>
                                 <li>Pseudo : <?php echo $_SESSION['pseudo']; ?></li>
-                                <li>Statut : <?php echo $_type[$_SESSION['id_type']]; ?></li>
-                                <li>Sexe : <?php echo $_sexe[$_SESSION['sexe']]; ?></li>
-                                <li>Age : <?php echo $_SESSION['age']; ?></li>
-                                <li>Pays : <?php echo $_SESSION['pays']; ?></li>
+                                <li>Email : <?php echo $_SESSION['email']; ?></li>
                             </ul>
                         </div>
-                        <div id="info" class="tab-pan fade">
-                            <form method="POST" action="#">
+                        <div id="mod" class="tab-pan fade">
+                            <?php echo form("../post/post_connexion.php?action=update&uri={$_SERVER["REQUEST_URI"]}",
+                                    "POST") ?>
                                 <div class="form-group">
                                     <label for="pseudo">Pseudo</label>
-                                    <input class="form-control" type="text" placeholder="<?php echo $_SESSION['pseudo']; ?>"/>
+                                    <?php echo form_input([
+                                        "required"=>"",
+                                        "name"=>"pseudo",
+                                        "type"=>"text",
+                                        "class"=>"form-control",
+                                        "placeholder"=>$_SESSION['pseudo']]); ?>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <?php echo form_input([
+                                        "required"=>"",
+                                        "name"=>"email",
+                                        "type"=>"email",
+                                        "class"=>"form-control",
+                                        "placeholder"=>$_SESSION['email']]); ?>
+                                </div>
+                                <div class="form_control_content" style="width: 200px; margin: auto">
+                                <?php
+                                    echo form_input(["type" => "submit", "class" => "btn btn-primary"]);
+                                    echo form_input(["type" => "reset", "class" => "btn btn-primary"]);
+                                ?>
                                 </div>
                             </form>
                         </div>

@@ -30,13 +30,28 @@ if (isset($_GET['action']))
                         "id"=>$result->getId(),
                         "email"=>$user->getEmail(),
                         "pseudo"=>$user->getPseudo()
-                            ]);                
+                            ]);
+                    $_SESSION["time"]=time();
 //                }
             }
             break;
         case "logout":
             unset_session_data();
             session_end();
+            break;
+        case "update":
+            if (isset($_POST['pseudo']) AND isset($_POST['email']))
+            {
+                $user = new User();
+                $user->setEmail(strip_tags($_POST['email']))->setId($_SESSION["id"]);
+                $user->setPseudo(strip_tags($_POST['pseudo']));
+                UserManager::getInstance()->update($user) ;
+                set_session_data([
+                        "id"=>$_SESSION["id"],
+                        "email"=>$user->getEmail(),
+                        "pseudo"=>$user->getPseudo()
+                            ]);
+            }
             break;
     }
 }
