@@ -10,7 +10,7 @@ class Database
     private $database;
     private static $p_singleton;
 
-    private function __construct($user = "jordy", $passwd = "jordy", $database = "Blog", $host = "localhost", $sgbd = "mysql")
+    private function __construct($user = "root", $passwd = "dalida", $database = "blog", $host = "localhost", $sgbd = "mysql")
     {
         $dsn = $sgbd . ':host=' . $host . ';dbname=' . $database;
         try
