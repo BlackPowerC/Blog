@@ -83,10 +83,11 @@ class UserManager extends Manager
         {
             return;
         }
-        $ps=$this->pdo->prepare("INSERT INTO User VALUES (NULL, :pseudo, :email)") ;
+        $ps=$this->pdo->prepare("UPDATE User SET pseudo=:pseudo, email=:email WHERE id=:id") ;
         $ps->execute([
             "pseudo"=>$a->getPseudo(),
-            "email"=>$a->getEmail()
+            "email"=>$a->getEmail(),
+            "id"=>$_SESSION["id"]
             ]);
         $ps->closeCursor() ;
     }
