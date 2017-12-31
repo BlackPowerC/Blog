@@ -35,7 +35,6 @@ class Pagination
             return ;
         }
         $this->nItem = (integer) $reponse[0];
-        var_dump($this->nItem) ;
         $this->nPage = (integer) ceil($this->nItem / $this->perPage);
         $requete->closeCursor() ;
     }

@@ -12,5 +12,5 @@
 define("ROOT", $_SERVER["CONTEXT_DOCUMENT_ROOT"].'/Blog/src/app/');
 define("HELPER", ROOT.'/helper/') ;
 define("ENTITY", ROOT.'/repository/entity/') ;
-define("MANAGER", ROOT.'/repository/manager') ;
+define("MANAGER", ROOT.'/repository/manager/') ;
 define("CLASSE", ROOT.'/classe/') ;

@@ -99,7 +99,7 @@
                                     <?php
                                     // Affichage du commenraire
                                     echo $cmt->getText();
-                                    if (isset($_SESSION['token']))
+                                    if (isset($_SESSION["id"]) && isset($_SESSION["email"]) && isset($_SESSION["pseudo"]))
                                     {
                                         ?>
                                         <!-- Lien de réponse -->
@@ -139,7 +139,7 @@
                         <!-- end article_comment_content -->
 
                         <?php
-                        if (isset($_SESSION['token']))
+                        if (isset($_SESSION['id']))
                         {
                             ?>
                             <div class="article_comment_zone">

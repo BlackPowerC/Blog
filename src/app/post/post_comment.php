@@ -1,10 +1,11 @@
 <?php
 
 session_start();
-require '../classe/Database.php';
-require_once '../repository/entity/Comment.php';
+require_once '../core/Autoloader.php';
+Autoloader::getInstance()->load_entity('comment') ;
+Autoloader::getInstance()->load_manager('commentManager') ;
 
-if (isset($_SESSION["token"]))
+if (isset($_SESSION["id"]) && isset($_SESSION["email"]) && isset($_SESSION["pseudo"]))
 {
     if (isset($_POST['operation']))
     {
@@ -15,21 +16,24 @@ if (isset($_SESSION["token"]))
                 {
                     if (strcmp($_POST["comment"], "") != 0)
                     {
-                        $comment = strip_tags($_POST["comment"]);
-                        $id_article = strip_tags($_POST["id_article"]);
-                        $id_user = strip_tags($_SESSION["id"]);
+                        $text = strip_tags($_POST["comment"]);
+                        $id_article = (int) strip_tags($_POST["id_article"]);
+                        $id_user = (int) strip_tags($_SESSION["id"]);
                         $cmt = new Comment() ;
-                        $cm->setId_user($id_user)
+                        $cmt->setId_user($id_user)
                                 ->setId_article($id_article)
-                                ->setDate(date("d-m-y"))
-                                ->setText($comment) ;
-                        CommentManager::getInstance()->insert($cm) ;
+                                ->setDate(date("Y-m-d H:i:s"))
+                                ->setText($text) ;
+                        CommentManager::getInstance()->insert($cmt) ;
                     }
                 }
                 break;
             case 'delete':
-                $id_comment = strip_tags($_POST['id_comment']);
-                CommentManager::getInstance()->delete($id_comment) ;
+                if (isset($_POST["id_comment"]))
+                {
+                    $id_comment = strip_tags($_POST['id_comment']);
+                    CommentManager::getInstance()->delete($id_comment) ;
+                }
             case 'modify':
                 if (isset($_POST["comment"]) AND isset($_POST["id_article"]))
                 {

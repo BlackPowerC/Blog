@@ -1,7 +1,7 @@
 <?php
 session_start() ;
 
-if(isset($_SESSION['id_type']) AND $_SESSION['id_type'] == 2 )
+if(isset($_SESSION['id']) AND $_SESSION['id'] == 1 )
 {
     header("Location: backend.php?link=rediger") ;
     exit() ;
