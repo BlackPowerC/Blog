@@ -67,6 +67,7 @@ if (isset($_SESSION['id']) AND $_SESSION['id'] == 1)
                 break;
             case 'delete' :
                 $id = trim($_POST['id']);
+                TagManager::getInstance()->delete($id) ;
                 ArticleManager::getInstance()->delete($id) ;
         }
         header("Location: ../backend/backend.php?link=rediger&msg=0");
