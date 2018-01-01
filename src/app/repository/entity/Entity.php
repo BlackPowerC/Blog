@@ -12,5 +12,6 @@ class Entity
     function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 }

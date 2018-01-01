@@ -9,17 +9,18 @@
 session_start();
 
 require_once '../core/Autoloader.php';;
-Autoloader::getInstance()->load_class('vote') ;
+Autoloader::getInstance()->load_entity('vote') ;
+Autoloader::getInstance()->load_class('voting') ;
 
-if (isset($_SESSION["token"]))
+if (isset($_SESSION["id"]))
 {
     if (isset($_POST["vote"]) AND isset($_POST["id_article"]))
     {
-        $vote = boolval((int) strip_tags($_POST["vote"]));
+        $vote = (int) strip_tags($_POST["vote"]);
         $id_article = (int) strip_tags($_POST["id_article"]);
-        
-        $this_vote = new Vote(["id_user"=>$_SESSION["id"], "id_article"=>$id_article, "type_vote"=>$vote]) ;
-        $this_vote->vote() ;
+        $this_vote = new Vote() ;
+        $this_vote->setId($id_article)->setType($vote)->setId_user($_SESSION["id"]) ;
+        Voting::getInstance()->vote($this_vote) ;
     }
 }
 /* redirection en envoyant un message d'erreur */

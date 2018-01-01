@@ -24,13 +24,13 @@ and open the template in the editor.
 .vote_bar
 {
     width: 30%;
-    background-color: red ;
+    background-color: #c12e2a ;
 }
 
 .vote_progress
 {
     width: 70%;
-    background-color: green;
+    background-color: #292;
 }
 
 /* Bouton de vote */

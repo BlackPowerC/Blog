@@ -15,13 +15,12 @@
  * @field $id_article Identifiant de l'article à voter
  * @field $type_vote Le type de vote (like ou dislike)
  */
-require_once 'Database.php';
+require_once 'Entity.php';
 
 class Vote extends Entity
 {
     private $id_user;
     private $type_vote;
-    
     
     public function __construct() {}
 
@@ -31,13 +30,19 @@ class Vote extends Entity
         return $this;
     }
 
-    public function getId_article()
-    {
-        return $this->id_article;
-    }
-
     public function getId_user()
     {
         return $this->id_user;
+    }
+    
+    public function getType()
+    {
+        return $this->type_vote;
+    }
+
+    public function setType(int $type)
+    {
+        $this->type_vote= $type;
+        return $this;
     }
 }

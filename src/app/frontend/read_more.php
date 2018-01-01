@@ -9,10 +9,10 @@ Autoloader::getInstance()->load_manager('commentManager') ;
 Autoloader::getInstance()->load_entity('comment') ;
 Autoloader::getInstance()->load_entity('tag') ;
 Autoloader::getInstance()->load_entity('article') ;
-Autoloader::getInstance()->load_class('database') ;
 Autoloader::getInstance()->load_class('pages') ;
-Autoloader::getInstance()->load_class('vote') ;
+Autoloader::getInstance()->load_class('voting') ;
 Autoloader::getInstance()->load_class('mediaSharing') ;
+Autoloader::getInstance()->load_helper('form_helper') ;
 
 class readmoreController
 {
@@ -36,7 +36,7 @@ class readmoreController
 
     public function readmoreIndex()
     {
-        $id_article = strip_tags($_GET['id_article']);
+        $id_article = (int) strip_tags($_GET['id_article']);
         /* L'article */
         $article = ArticleManager::getInstance()->findByid($id_article) ;
         
@@ -47,7 +47,7 @@ class readmoreController
         $tags = TagManager::getInstance()->findByid($id_article) ;
         
         /* Les résultats du vote */
-        $vote_results = Vote::getVoteResults($id_article);
+        $vote_results = Voting::getVoteResults($id_article);
         include_once '../views/readmoreView.php';
     }
 
