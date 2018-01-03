@@ -16,7 +16,7 @@ Autoloader::getInstance()->load_class('pages') ;
     ?>
     <body>
         <header>
-            <?php include_once '../views/navbarView.php'; ?>
+            <?php include_once '../views/navbar.inc.php'; ?>
         </header>
         <div class="main_content container container-fluid">
             <div class="text-center">

@@ -8,6 +8,6 @@ if(isset($_SESSION['id']) AND $_SESSION['id'] == 1 )
 }
 else
 {
-    header("Location: ../frontend/index.php") ;
+    header("Location: ../frontend/home.php") ;
     exit() ;
 }

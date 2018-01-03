@@ -55,5 +55,5 @@ if (isset($_GET['action']))
             break;
     }
 }
-header('Location: http://' . $_SERVER["SERVER_NAME"] . '/' . strip_tags($_GET['uri']));
+header('Location: http://' . $_SERVER["SERVER_NAME"] . strip_tags($_GET['uri']));
 exit();
