@@ -31,9 +31,11 @@
                     <div class="article_content">
                         <!-- Zone de l'article -->
                         <div class="article_header_content">
-                            <?php echo $article->getTitre(); ?>
-                            <?php echo $article->getDate(); ?>
+                            <h2><?php echo $article->getTitre(); ?></h2>                                    
+                            Publié le <?php echo substr($article->getDate(), 0, 10); ?>
+                            à <?php echo substr($article->getDate(), 10); ?>
                         </div>
+                        <hr/>
                         <!-- end article_header_content -->
 
                         <div class="article_text_content">
