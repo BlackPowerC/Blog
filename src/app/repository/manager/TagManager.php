@@ -57,9 +57,9 @@ class TagManager extends Manager
         {
             return [];
         }
-        $tag = new Tag() ;
         foreach ($results as $value)
         {
+            $tag = new Tag() ;
             $tag->setId_article($value["id_article"]) ;
             $tag->setTag($value["tag"]) ;
             array_push($tag_array, $tag) ;
@@ -78,9 +78,9 @@ class TagManager extends Manager
         {
             return [];
         }
-        $tag = new Tag() ;
         foreach ($result as $value)
         {
+            $tag = new Tag() ;
             $tag->setId_article($value["id_article"]) ;
             $tag->setTag($value["tag"]) ;
             array_push($tag_array, $tag) ;
@@ -99,9 +99,9 @@ class TagManager extends Manager
         {
             return [];
         }
-        $tag = new Tag() ;
         foreach ($results as $value)
         {
+            $tag = new Tag() ;
             $tag->setId_article($value["id_article"]) ;
             $tag->setTag($value["tag"]) ;
             array_push($tag_array, $tag) ;
