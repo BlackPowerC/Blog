@@ -29,7 +29,7 @@ class Pagination
     {
         /* 'select COUNT(' . $column . ') AS nItem FROM ' . $table.' '.$where */
         $requete = Database::getInstance()->getInstance()->getPDO()->query($countRequest);
-        $reponse = $requete->fetchAll(PDO::FETCH_NUM);
+        $reponse = $requete->fetch(PDO::FETCH_NUM);
         if($reponse === FALSE)
         {
             return ;
