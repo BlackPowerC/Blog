@@ -41,7 +41,7 @@ if (isset($_SESSION['id']) AND $_SESSION['id'] == 1)
                 break;
 
             case 'site':
-                header("Location: ../frontend/index.php");
+                header("Location: ../frontend/home.php");
                 exit() ;
                 break;
 
@@ -50,10 +50,7 @@ if (isset($_SESSION['id']) AND $_SESSION['id'] == 1)
                 break;
 
             case 'logout':
-                unset($_SESSION["token"]);
-                unset($_SESSION["login"]);
-                unset($_SESSION["passwd"]);
-                header("Location: ../frontend/index.php");
+                header("Location: ../post/post_connexion.php?action=logout");
                 exit() ;
                 break;
         }
