@@ -4,7 +4,7 @@
             <span class="navbar-brand">BLOG</span>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="../frontend/index.php">Site</a></li>
+            <li><a href="../frontend/home.php">Site</a></li>
             <li><a href="backend.php?link=rediger">Rédiger</a></li>
             <li><a href="backend.php?link=stats">Statistiques</a></li>
             <li><a href="backend.php?link=logout">Déconnexion</a></li>

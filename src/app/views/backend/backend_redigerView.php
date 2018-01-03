@@ -10,8 +10,8 @@
     {
         if (isset($_POST['id']))
         {
-            $sql_query_tags = "SELECT t.tag FROM tag t 
-                                    LEFT JOIN article a ON a.id = t.id_article
+            $sql_query_tags = "SELECT t.tag FROM Tag t 
+                                    LEFT JOIN Article a ON a.id = t.id_article
                                     WHERE t.id_article=:id";
             $request_tags = $pdo->prepare($sql_query_tags);
             $request_tags->execute(array("id" => strip_tags($_POST["id"])));
