@@ -25,14 +25,14 @@
     <body>
         <!-- En-tete -->
         <header>
-            <?php include_once 'navbarView.php'; ?>
+            <?php include_once 'navbar.inc.php'; ?>
         </header>
         <div id="page" class="container container-fluid">
             <!-- Entete avec nom de l'utilisateur et Photo de profil -->
             <div class="row">
                 <!-- Colonne pour la pp -->
                 <div class="side_content col-lg-4 col-md-4 col-xs-4">
-                    <img class="img-thumbnail" alt="<?php echo $_SESSION['pseudo']; ?>" src="../../../ressource/img/600628_515012425217344_1213649186_n.jpg"/>
+                    <img class="img-thumbnail" alt="<?php echo $_SESSION['pseudo']; ?>" src="600628_515012425217344_1213649186_n.jpg"/>
                 </div>
                 <div class="main_content col-lg-8 col-md-8 col-xs-8">
                     <h1 class="text-center">Informations personnelles</h1>
@@ -52,33 +52,10 @@
                             </ul>
                         </div>
                         <div id="mod" class="tab-pan fade">
-                            <?php echo form("../post/post_connexion.php?action=update&uri={$_SERVER["REQUEST_URI"]}",
-                                    "POST") ?>
-                                <div class="form-group">
-                                    <label for="pseudo">Pseudo</label>
-                                    <?php echo form_input([
-                                        "required"=>"",
-                                        "name"=>"pseudo",
-                                        "type"=>"text",
-                                        "class"=>"form-control",
-                                        "placeholder"=>$_SESSION['pseudo']]); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">E-mail</label>
-                                    <?php echo form_input([
-                                        "required"=>"",
-                                        "name"=>"email",
-                                        "type"=>"email",
-                                        "class"=>"form-control",
-                                        "placeholder"=>$_SESSION['email']]); ?>
-                                </div>
-                                <div class="form_control_content" style="width: 200px; margin: auto">
-                                <?php
-                                    echo form_input(["type" => "submit", "class" => "btn btn-primary"]);
-                                    echo form_input(["type" => "reset", "class" => "btn btn-primary"]);
-                                ?>
-                                </div>
-                            </form>
+                        <?php
+                            $action="../post/post_connexion.php?action=update&uri=".$_SERVER["REQUEST_URI"] ;
+                            include_once '../views/form.inc.php';
+                        ?>
                         </div>
                     </div>
                 </div>
