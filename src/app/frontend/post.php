@@ -44,7 +44,10 @@ class readmoreController
         $comments = CommentManager::getInstance()->findByid($id_article) ;
         
         /* Récupération des tags */
+        // Tag de l'article
         $tags = TagManager::getInstance()->findByid($id_article) ;
+        // Tout les Tags
+        $tags2 = TagManager::getInstance()->findAll() ;
         
         /* Les résultats du vote */
         $vote_results = Voting::getVoteResults($id_article);

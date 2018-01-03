@@ -40,6 +40,8 @@ class indexController
                             WHERE a.titre LIKE '%{$keyword}%' OR a.text LIKE '%{$keyword}%' 
                             GROUP by a.id" ;
         $data = $pages->initContent($pageNum, $sqlStatement);
+        // Tout les Tags
+        $tags = TagManager::getInstance()->findAll() ;
         include_once '../views/home.inc.php';
     }
 
@@ -67,6 +69,8 @@ class indexController
                                 WHERE t.tag LIKE '%{$tag}%'
                                 GROUP by a.id";
         }
+        // Tout les Tags
+        $tags = TagManager::getInstance()->findAll() ;
         $data = $pages->initContent($page, $sqlStatement);
         include_once '../views/home.inc.php';
     }

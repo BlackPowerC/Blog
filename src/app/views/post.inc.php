@@ -13,6 +13,19 @@
                     <?php
                     (isset($_SESSION['id'])) ? Page::getConnecteddiv($_SESSION['pseudo']) : Page::getLoginform();
                     ?>
+                    <div class="panel panel-default">
+                        <div class="panel panel-heading">Etiquettes: </div>
+                        <div class="panel panel-body">
+                            <?php
+                            foreach($tags2 as $t)
+                            {
+                            ?>
+                            <a href="home.php?tag=<?php echo $t->getTag(); ?>" class="well well-sm"><?php echo $t->getTag(); ?></a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="main_content col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="article_content">
@@ -33,7 +46,7 @@
                                 foreach ($tags as $tag)
                                 {
                                     ?>
-                                    <a href="index.php?tag=<?php echo $tag->getTag(); ?>" class="well well-sm"><?php echo $tag->getTag(); ?></a>
+                                    <a href="home.php?tag=<?php echo $tag->getTag(); ?>" class="well well-sm"><?php echo $tag->getTag(); ?></a>
                                     <?php
                                 }
                                 ?>
